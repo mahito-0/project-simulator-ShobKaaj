@@ -1,0 +1,72 @@
+/* Forgot Password Page Styles */
+
+/* =========================
+   1. Page Layout
+   ========================= */
+.main-content {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8) var(--space-4);
+}
+
+.auth-card-wrapper {
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* =========================
+   2. Auth Card Component
+   ========================= */
+.auth-card {
+    background: var(--surface-elevated);
+    border: 1px solid var(--line);
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+}
+
+.card-header {
+    text-align: center;
+    margin-bottom: var(--space-8);
+}
+
+.auth-title {
+    font-size: var(--fs-2xl);
+    font-weight: var(--fw-bold);
+    margin-bottom: var(--space-2);
+    color: var(--text);
+}
+
+.auth-subtitle {
+    color: var(--text-muted);
+    font-size: var(--fs-base);
+    line-height: var(--lh-normal);
+}
+
+/* =========================
+   3. Form Elements
+   ========================= */
+.auth-form .form-group {
+    margin-bottom: var(--space-6);
+}
+
+.full-width {
+    width: 100%;
+}
+
+/* =========================
+   4. Footer Section
+   ========================= */
+.auth-footer {
+    margin-top: var(--space-6);
+    text-align: center;
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+}
+
+.auth-footer a {
+    font-weight: var(--fw-medium);
+}

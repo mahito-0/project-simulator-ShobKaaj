@@ -1,0 +1,234 @@
+/* Find Work Page Styles */
+
+/* =========================
+   1. Page Layout
+   ========================= */
+.main-content {
+    min-height: 100vh;
+    padding: 120px var(--space-5) var(--space-16);
+    background: var(--bg);
+}
+
+.search-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* =========================
+   2. Search Header
+   ========================= */
+.search-header {
+    text-align: center;
+    margin-bottom: var(--space-16);
+}
+
+.page-title {
+    font-size: var(--fs-4xl);
+    font-weight: 800;
+    margin-bottom: var(--space-4);
+    background: var(--text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.page-subtitle {
+    color: var(--text-secondary);
+    font-size: var(--fs-lg);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* =========================
+   3. Search Bar Area
+   ========================= */
+.search-bar-wrapper {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--space-12);
+}
+
+.search-form {
+    display: grid;
+    grid-template-columns: 2fr 1.25fr 1.25fr auto;
+    /* Gave slightly more weight to filters */
+    gap: var(--space-3);
+    /* Tighter gap */
+    align-items: center;
+}
+
+.input-group {
+    position: relative;
+    width: 100%;
+}
+
+.input-icon {
+    position: absolute;
+    left: var(--space-3);
+    /* 12px - closer to edge */
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    z-index: 2;
+    pointer-events: none;
+    font-size: var(--fs-sm);
+}
+
+/* Using Base Input Style Override for Icon Positioning */
+.search-input {
+    height: var(--height-lg);
+    /* Increased to 56px */
+    background-color: var(--bg);
+    padding: 0 var(--space-4) 0 var(--space-10);
+    /* 40px left padding for icon */
+    line-height: normal;
+    margin: 0;
+}
+
+/* Specific fix for Select to keep the arrow and left icon */
+select.search-input {
+    padding-right: var(--space-10);
+    /* Space for arrow */
+    appearance: none;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: var(--ring);
+}
+
+/* =========================
+   4. Job Grid Layout
+   ========================= */
+.job-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--space-8);
+}
+
+/* =========================
+   5. Job Card Component
+   ========================= */
+.job-card {
+    background: var(--bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.job-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.job-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-4);
+}
+
+.client-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.client-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.client-name {
+    font-size: var(--fs-sm);
+    color: var(--text-secondary);
+}
+
+.job-budget {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--primary);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+}
+
+/* Main Content inside Card */
+.job-title {
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    margin-bottom: var(--space-3);
+    color: var(--text);
+    line-height: 1.4;
+}
+
+.job-desc {
+    color: var(--text-secondary);
+    font-size: var(--fs-base);
+    line-height: 1.6;
+    margin-bottom: var(--space-6);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.job-tags {
+    display: flex;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+    flex-wrap: wrap;
+}
+
+.tag {
+    background: rgba(255, 255, 255, 0.05);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-sm);
+    font-size: var(--fs-xs);
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Card Footer */
+.job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.job-location {
+    font-size: var(--fs-sm);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.apply-btn {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    transition: gap 0.2s;
+}
+
+.job-card:hover .apply-btn {
+    gap: var(--space-3);
+}

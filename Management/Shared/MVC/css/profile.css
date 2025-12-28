@@ -1,0 +1,135 @@
+/* Profile Page Styles */
+
+/* =========================
+   1. Page Layout
+   ========================= */
+.profile-container {
+    padding-top: 100px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+
+/* =========================
+   2. Profile Header
+   ========================= */
+.profile-header {
+    text-align: center;
+    margin-bottom: var(--space-8);
+}
+
+.profile-avatar-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto var(--space-4);
+}
+
+.profile-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary);
+}
+
+.upload-btn {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--primary);
+    border: 3px solid var(--surface);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all var(--duration-fast);
+}
+
+.upload-btn:hover {
+    transform: scale(1.1);
+    background: var(--primary-hover);
+}
+
+.upload-btn i {
+    font-size: var(--fs-md);
+}
+
+.profile-title {
+    font-size: var(--fs-2xl);
+    background: var(--text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: var(--space-2);
+}
+
+.profile-role {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--primary);
+    border-radius: var(--radius-full);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+}
+
+/* =========================
+   3. Profile Content Sections
+   ========================= */
+.profile-section {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    margin-bottom: var(--space-6);
+}
+
+.section-title {
+    font-size: var(--fs-xl);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--line);
+    color: var(--text);
+}
+
+/* =========================
+   4. Form Layout & Elements
+   ========================= */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group {
+    margin-bottom: var(--space-4);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--space-2);
+    color: var(--text-secondary);
+    font-size: var(--fs-sm);
+}
+
+/* Input styling is handled by base.css */
+.input-readonly {
+    background: rgba(255, 255, 255, 0.05);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--space-6);
+}
