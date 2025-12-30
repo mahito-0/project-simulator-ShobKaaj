@@ -227,7 +227,7 @@ class JobAPI
                 FROM applications a
                 JOIN jobs j ON a.job_id = j.id
                 JOIN users u ON a.worker_id = u.id
-                WHERE j.client_id = ? AND a.status != 'rejected'
+                WHERE j.client_id = ? AND a.status != 'rejected' AND j.status != 'completed'
                 ORDER BY a.created_at DESC";
 
         $stmt = $this->db->prepare($sql);

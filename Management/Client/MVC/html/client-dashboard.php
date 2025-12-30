@@ -64,7 +64,7 @@
     </main>
 
     <!-- Use worker-dashboard.js as it contains client logic too -->
-    <script src="/project-simulator-ShobKaaj/Management/Worker/MVC/js/worker-dashboard.js"></script>
+    <script src="/project-simulator-ShobKaaj/Management/Client/MVC/js/client-dashboard.js"></script>
 </body>
 
 </html>
