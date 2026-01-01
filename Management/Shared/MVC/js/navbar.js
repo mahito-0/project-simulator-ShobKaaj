@@ -28,10 +28,7 @@ const $api = async function (endpoint) {
     return { notifications: [] };
 };
 
-/**
- * Global Avatar Path Helper
- * Normalizes DB paths (legacy/relative) to correct absolute URL
- */
+
 window.getAvatarPath = function (avatarStr, role = '') {
     const DEFAULT_AVATAR = '/project-simulator-ShobKaaj/Management/Shared/MVC/images/logo.png';
     if (!avatarStr) return DEFAULT_AVATAR;
