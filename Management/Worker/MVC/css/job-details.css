@@ -1,0 +1,194 @@
+/* Job Details Page - Unified Card Layout */
+
+/* Global Container */
+.container {
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: var(--space-6);
+}
+
+/* Layout Grid */
+.details-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-6);
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================
+   1. Job Main Card (Left Column)
+   ========================= */
+.job-main-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+}
+
+/* Internal Header Styles */
+.card-header-content {
+    margin-bottom: var(--space-6);
+}
+
+.job-meta-tags {
+    display: flex;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+}
+
+.card-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: var(--space-6);
+    line-height: 1.2;
+}
+
+/* Client Mini Profile */
+.client-mini-profile {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.avatar-sm {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.client-name {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.client-loc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Divider */
+.card-divider {
+    height: 1px;
+    background: var(--line);
+    margin: var(--space-6) 0;
+}
+
+/* Description Area */
+.job-description-area h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--space-4);
+    color: var(--text);
+}
+
+.desc-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    white-space: pre-wrap;
+}
+
+/* =========================
+   2. Sidebar / Application Form (Right Column)
+   ========================= */
+.application-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    position: sticky;
+    top: 40px;
+    /* Sticky scroll */
+}
+
+.budget-display {
+    text-align: center;
+    padding-bottom: var(--space-6);
+    margin-bottom: var(--space-6);
+    border-bottom: 1px solid var(--line);
+}
+
+.budget-amount {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-top: var(--space-2);
+}
+
+.small {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: var(--space-4);
+}
+
+.label {
+    display: block;
+    margin-bottom: var(--space-2);
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.input {
+    width: 100%;
+    padding: 12px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.input:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+.currency-input {
+    position: relative;
+}
+
+.currency-symbol {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.currency-input input {
+    padding-left: 32px;
+}
+
+/* Badges */
+.badge {
+    padding: 4px 12px;
+    border-radius: 99px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--text-secondary);
+}
+
+.badge.primary {
+    background: var(--primary-subtle);
+    color: var(--primary);
+    border-color: transparent;
+}
