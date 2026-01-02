@@ -70,6 +70,10 @@ class JobAPI
             case 'apply':
                 $this->ApplyForJob();
                 break;
+            
+            case 'complete_job':
+                $this->sendResponse('success', 'will be implemented later');
+                // will be implemented later
             default:
                 $this->sendResponse('error', 'Invalid action');
         }
