@@ -46,19 +46,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const response = await fetch(`${basePath}jobAPI.php?${params.toString()}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const result = await response.json();
+            console.log('Job API Result:', result); // Debug log
 
-            if (result.status === 'success' && result.jobs.length > 0) {
-                renderJobs(result.jobs);
+            if (result.status === 'success') {
+                if (result.jobs && result.jobs.length > 0) {
+                    renderJobs(result.jobs);
+                } else {
+                    renderEmpty();
+                }
             } else {
-                renderEmpty();
+                // API returned an error status
+                console.error('API Error:', result.message);
+                jobsContainer.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; color: var(--error); padding: 40px;">
+                        <i class="fas fa-exclamation-triangle fa-2x"></i>
+                        <p>Error: ${result.message}</p>
+                    </div>
+                `;
             }
         } catch (error) {
             console.error('Job fetch failed:', error);
             jobsContainer.innerHTML = `
                 <div style="grid-column: 1/-1; text-align: center; color: var(--error); padding: 40px;">
                     <i class="fas fa-exclamation-circle fa-2x"></i>
-                    <p>Something went wrong loading jobs. Please try refreshing.</p>
+                    <p>Connection failed. please check console.</p>
                 </div>
             `;
         }
