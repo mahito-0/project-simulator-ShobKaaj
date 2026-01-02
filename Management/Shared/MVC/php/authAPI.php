@@ -30,7 +30,7 @@ class AuthAPI
         exit;
     }
 
-    // Retrieve input from POST or JSON body
+
     function getInput($key)
     {
         // 1. Try GET (Query Params)
@@ -182,6 +182,11 @@ class AuthAPI
 
                 // Verify the password hash
                 if (password_verify($password, $user['password'])) {
+                    // Check if user is terminated
+                    if (isset($user['status']) && $user['status'] === 'terminated') {
+                        $this->sendResponse('error', 'Your account has been terminated. Please contact support.');
+                    }
+
                     // Remove password from response for security
                     unset($user['password']);
 
@@ -318,8 +323,11 @@ class AuthAPI
         } elseif ($role === 'worker') {
             $targetDir = "../../../Worker/MVC/images/users/";
             $webPathPrefix = "/Worker/MVC/images/users/";
+        } elseif ($role === 'admin') {
+            $targetDir = "../../../Admin/MVC/images/users/";
+            $webPathPrefix = "/Admin/MVC/images/users/";
         } else {
-            // Fallback for admin or undefined
+            // Fallback
             $targetDir = "../images/users/";
             $webPathPrefix = "/Shared/MVC/images/users/";
         }
