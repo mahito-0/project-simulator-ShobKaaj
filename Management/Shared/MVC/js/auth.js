@@ -55,7 +55,7 @@ if (signInForm) {
             } else if (result.user.role === 'worker') {
                 window.location.href = `${basePath}/Worker/MVC/html/worker-dashboard.php`;
             } else {
-                window.location.href = `${basePath}/Shared/MVC/html/admin.php`;
+                window.location.href = `${basePath}/Admin/MVC/html/admin.php`;
             }
         } else {
             alert('Login Failed: ' + result.message);

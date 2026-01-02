@@ -1,0 +1,144 @@
+/* Admin Dashboard Styles */
+.container {
+    padding-top: 100px;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+    margin-bottom: var(--space-10);
+}
+
+.stat-card {
+    background: var(--surface-elevated);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-subtle);
+}
+
+.stat-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    border: 1px solid var(--line);
+}
+
+.stat-info h3 {
+    font-size: var(--fs-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-1);
+    font-weight: var(--fw-medium);
+}
+
+.stat-info .value {
+    font-size: 2rem;
+    font-weight: var(--fw-bold);
+    color: var(--text);
+    line-height: 1.1;
+}
+
+/* User Management Table */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-6);
+}
+
+.table-container {
+    background: var(--surface-elevated);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text-secondary);
+    font-weight: var(--fw-semibold);
+    font-size: var(--fs-sm);
+    padding: var(--space-4);
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+}
+
+td {
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--line);
+    color: var(--text);
+    font-size: var(--fs-sm);
+    vertical-align: middle;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 99px;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-medium);
+    border: 1px solid transparent;
+}
+
+.badge.verified {
+    background: var(--success-subtle);
+    color: var(--success-muted);
+    border-color: rgba(16, 185, 129, 0.2);
+}
+
+.badge.unverified {
+    background: var(--warning-subtle);
+    color: var(--warning-muted);
+    border-color: rgba(245, 158, 11, 0.2);
+}
+
+.badge.terminated {
+    background: var(--error-subtle);
+    color: var(--error-muted);
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+.badge.active-status {
+    background: var(--info-subtle);
+    color: var(--info-muted);
+    border-color: rgba(59, 130, 246, 0.2);
+}
+
+/* Action Buttons Grid */
+.actions-cell {
+    display: flex;
+    gap: var(--space-2);
+}

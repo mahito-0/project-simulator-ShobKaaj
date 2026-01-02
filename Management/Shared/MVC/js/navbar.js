@@ -53,6 +53,7 @@ window.getAvatarPath = function (avatarStr, role = '') {
 
     if (safeRole === 'client') dir = 'Client';
     else if (safeRole === 'worker') dir = 'Worker';
+    else if (safeRole === 'admin') dir = 'Admin'; // Explicitly check for Admin
 
     const finalPath = `/project-simulator-ShobKaaj/Management/${dir}/MVC/images/users/${filename}`;
     return finalPath;
@@ -144,8 +145,7 @@ function renderNavbar(user) {
     if (user) {
         if (user.role === 'admin') {
             navItems = [
-                { href: `${sharedPath}/admin.php`, text: 'Admin', auth: true },
-                { href: `${clientPath}/client-dashboard.php`, text: 'Dashboard', auth: true },
+                { href: `/project-simulator-ShobKaaj/Management/Admin/MVC/html/admin.php`, text: 'Dashboard', auth: true },
             ];
         } else {
             // Dashboard depends on Role
