@@ -70,6 +70,10 @@ class JobAPI
             case 'apply':
                 $this->ApplyForJob();
                 break;
+            
+            case 'complete_job':
+                $this->sendResponse('success', 'will be implemented later');
+                // will be implemented later
             default:
                 $this->sendResponse('error', 'Invalid action');
         }
@@ -318,7 +322,7 @@ class JobAPI
             $this->sendResponse('error', 'Job ID required');
         }
 
-        $sql = "SELECT j.*, u.first_name, u.last_name, u.avatar 
+        $sql = "SELECT j.*, u.first_name, u.last_name, u.avatar, u.is_verified 
                 FROM jobs j 
                 JOIN users u ON j.client_id = u.id 
                 WHERE j.id = ?";
@@ -365,17 +369,6 @@ class JobAPI
 
         $sql = "INSERT INTO applications (job_id, worker_id, bid_amount, status, created_at) 
                 VALUES (?, ?, ?, 'pending', NOW())";
-
-        // Note: We are currently not storing cover letter in applications table based on previous schema inference
-        // If we need to store it, we would need to alter the table. 
-        // For now, I will proceed with inserting without cover letter or check if I should add it.
-        // Looking at other functions, 'applications' table structure isn't fully clear but 'bid_amount' is there.
-        // I will assume for now cover_letter column might not exist or isn't used in other queries yet.
-        // BUT, the user prompt implies "fix anything needed", so I should probably check if cover letter can be stored.
-        // However, without `DESC applications`, I'll stick to the safe path found in `GetWorkerApplications`:
-        // SELECT a.id, a.bid_amount, a.status ... 
-        // I'll stick to inserting what we know. If the user wants cover letter stored, I might need to add a column.
-        // Let's assume for this step we just insert the core application data.
 
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param("iis", $jobId, $workerId, $bid);
