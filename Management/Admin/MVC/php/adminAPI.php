@@ -44,6 +44,9 @@ class AdminAPI
             case 'delete_job':
                 $this->deleteJob();
                 break;
+            case 'update_status':
+                $this->updateStatus();
+                break;
             default:
                 $this->sendResponse('error', 'Invalid Action');
         }
@@ -118,6 +121,43 @@ class AdminAPI
             $this->sendResponse('success', 'Job deleted successfully');
         } else {
             $this->sendResponse('error', 'Failed to delete job');
+        }
+    }
+
+    function updateStatus()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $userId = $data['user_id'] ?? null;
+        $type = $data['type'] ?? null;
+
+        if (!$userId || !$type) {
+            $this->sendResponse('error', 'Missing parameters');
+        }
+
+        $sql = "";
+
+        if ($type === 'verify') {
+            $sql = "UPDATE users SET is_verified = 'verified' WHERE id = ?";
+        } elseif ($type === 'unverify') {
+            $sql = "UPDATE users SET is_verified = 'unverified' WHERE id = ?";
+        } elseif ($type === 'terminate') {
+            $sql = "UPDATE users SET status = 'terminated' WHERE id = ?";
+        } elseif ($type === 'activate') {
+            $sql = "UPDATE users SET status = 'active' WHERE id = ?";
+        } else {
+            $this->sendResponse('error', 'Invalid type');
+        }
+
+        $stmt = $this->db->prepare($sql);
+        if (!$stmt) {
+            $this->sendResponse('error', 'Prepare failed: ' . $this->db->error);
+        }
+        $stmt->bind_param("i", $userId);
+
+        if ($stmt->execute()) {
+            $this->sendResponse('success', 'User updated successfully');
+        } else {
+            $this->sendResponse('error', 'Database error: ' . $stmt->error);
         }
     }
 }

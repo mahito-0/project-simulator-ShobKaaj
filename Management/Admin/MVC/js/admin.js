@@ -32,10 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const res = await fetch('../php/adminAPI.php?action=get_stats');
             const data = await res.json();
             if (data.status === 'success') {
-                animateValue(els.totalUsers, data.stats.total_users);
-                animateValue(els.verifiedUsers, data.stats.verified_users);
-                animateValue(els.terminatedUsers, data.stats.terminated_users);
-                if (els.totalJobs) animateValue(els.totalJobs, data.stats.total_jobs);
+                els.totalUsers.textContent = data.stats.total_users;
+                els.verifiedUsers.textContent = data.stats.verified_users;
+                els.terminatedUsers.textContent = data.stats.terminated_users;
+                if (els.totalJobs) els.totalJobs.textContent = data.stats.total_jobs;
             }
         } catch (e) {
             console.error(e);
@@ -202,19 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function animateValue(obj, end) {
-        let startTimestamp = null;
-        const duration = 1000;
-        const start = parseInt(obj.innerHTML);
-        const step = (timestamp) => {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            obj.innerHTML = Math.floor(progress * (end - start) + start);
-            if (progress < 1) {
-                window.requestAnimationFrame(step);
-            }
-        };
-        window.requestAnimationFrame(step);
-    }
+
 
 });

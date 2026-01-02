@@ -182,6 +182,11 @@ class AuthAPI
 
                 // Verify the password hash
                 if (password_verify($password, $user['password'])) {
+                    // Check if user is terminated
+                    if (isset($user['status']) && $user['status'] === 'terminated') {
+                        $this->sendResponse('error', 'Your account has been terminated. Please contact support.');
+                    }
+
                     // Remove password from response for security
                     unset($user['password']);
 
