@@ -30,7 +30,7 @@ class AuthAPI
         exit;
     }
 
-    // Retrieve input from POST or JSON body
+
     function getInput($key)
     {
         // 1. Try GET (Query Params)
@@ -318,8 +318,11 @@ class AuthAPI
         } elseif ($role === 'worker') {
             $targetDir = "../../../Worker/MVC/images/users/";
             $webPathPrefix = "/Worker/MVC/images/users/";
+        } elseif ($role === 'admin') {
+            $targetDir = "../../../Admin/MVC/images/users/";
+            $webPathPrefix = "/Admin/MVC/images/users/";
         } else {
-            // Fallback for admin or undefined
+            // Fallback
             $targetDir = "../images/users/";
             $webPathPrefix = "/Shared/MVC/images/users/";
         }
