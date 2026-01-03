@@ -1,0 +1,260 @@
+/* My Posted Jobs Page Styles */
+
+/* Header Section */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--line);
+}
+
+.page-title {
+    font-size: var(--fs-3xl);
+    margin-bottom: var(--space-2);
+    color: var(--text);
+}
+
+#page-subtitle {
+    color: var(--text-muted);
+    font-size: var(--fs-base);
+}
+
+/* Tabs Navigation */
+.tabs-container {
+    margin-bottom: var(--space-6);
+}
+
+.tabs {
+    display: flex;
+    gap: var(--space-6);
+    border-bottom: 1px solid var(--line);
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    padding: var(--space-3) var(--space-1);
+    color: var(--text-secondary);
+    font-size: var(--fs-base);
+    font-weight: var(--fw-medium);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all var(--duration-fast);
+}
+
+.tab-btn:hover {
+    color: var(--primary);
+}
+
+.tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+/* Job List Layout */
+.job-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.job-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    transition: transform var(--duration-fast), box-shadow var(--duration-fast), border-color var(--duration-fast);
+}
+
+.job-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-subtle);
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-4);
+}
+
+.job-info h3 {
+    margin-bottom: var(--space-2);
+    color: var(--text);
+    font-size: var(--fs-xl);
+}
+
+.job-meta {
+    display: flex;
+    gap: var(--space-4);
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.meta-item i {
+    color: var(--primary);
+}
+
+/* Status Badges */
+.job-status {
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+.status-open {
+    background: var(--status-open-bg);
+    color: var(--status-open-text);
+    border: 1px solid var(--status-open-border);
+}
+
+.status-in_progress {
+    background: var(--status-assigned-bg);
+    color: var(--status-assigned-text);
+    border: 1px solid var(--status-assigned-border);
+}
+
+.status-completed {
+    background: var(--status-completed-bg);
+    color: var(--status-completed-text);
+    border: 1px solid var(--status-completed-border);
+}
+
+.job-budget {
+    font-size: var(--fs-xl);
+    font-weight: var(--fw-bold);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+/* Applications Grid */
+.applicant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-4);
+}
+
+.applicant-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    cursor: pointer;
+    transition: all var(--duration-fast);
+    display: flex;
+    flex-direction: column;
+}
+
+.applicant-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.applicant-header {
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
+    margin-bottom: var(--space-4);
+}
+
+.applicant-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 2px solid var(--line);
+}
+
+.applicant-details {
+    overflow: hidden;
+}
+
+.applicant-details h4 {
+    margin: 0;
+    font-size: var(--fs-lg);
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.applicant-details p {
+    margin: var(--space-1) 0 0;
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+}
+
+.bid-amount {
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-bold);
+    color: var(--primary);
+    margin-bottom: var(--space-4);
+    padding: var(--space-2) var(--space-3);
+    background: var(--primary-subtle);
+    border-radius: var(--radius);
+    display: inline-block;
+}
+
+.cover-letter {
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: var(--fs-sm);
+    margin-bottom: var(--space-4);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    background: var(--surface-elevated);
+    padding: var(--space-3);
+    border-radius: var(--radius);
+    line-height: var(--lh-relaxed);
+}
+
+/* Action Buttons */
+.action-row {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: auto;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line);
+}
+
+.badge {
+    padding: 4px 8px;
+    border-radius: var(--radius);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+}
+
+.badge.success {
+    background: var(--success-subtle);
+    color: var(--success);
+}
+
+.badge.secondary {
+    background: var(--surface-elevated);
+    color: var(--text-muted);
+}
+
+.badge.error {
+    background: var(--error-subtle);
+    color: var(--error);
+}

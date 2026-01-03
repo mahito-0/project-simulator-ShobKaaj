@@ -70,7 +70,7 @@ class JobAPI
             case 'apply':
                 $this->ApplyForJob();
                 break;
-            
+
             case 'complete_job':
                 $this->sendResponse('success', 'will be implemented later');
                 // will be implemented later
@@ -232,7 +232,7 @@ class JobAPI
     {
         $clientId = $this->getInput('client_id');
 
-        $sql = "SELECT a.id, a.job_id, a.worker_id, a.bid_amount, a.status, 
+        $sql = "SELECT a.id, a.job_id, a.worker_id, a.bid_amount, a.status, a.cover_letter, a.created_at,
                        j.title as job_title, u.first_name, u.last_name, u.avatar
                 FROM applications a
                 JOIN jobs j ON a.job_id = j.id
@@ -367,11 +367,11 @@ class JobAPI
             $this->sendResponse('error', 'You have already applied for this job');
         }
 
-        $sql = "INSERT INTO applications (job_id, worker_id, bid_amount, status, created_at) 
-                VALUES (?, ?, ?, 'pending', NOW())";
+        $sql = "INSERT INTO applications (job_id, worker_id, bid_amount, cover_letter, status, created_at) 
+                VALUES (?, ?, ?, ?, 'pending', NOW())";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("iis", $jobId, $workerId, $bid);
+        $stmt->bind_param("iiss", $jobId, $workerId, $bid, $cover);
 
         if ($stmt->execute()) {
             $this->sendResponse('success', 'Application submitted successfully');

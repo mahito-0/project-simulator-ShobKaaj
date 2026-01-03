@@ -153,7 +153,7 @@ async function loadClientProposals() {
                 html += `
                 <div class="applicant-card" onclick="window.location.href='/project-simulator-ShobKaaj/Management/Shared/MVC/html/view-profile.php?id=${app.worker_id}'">
                     <div class="applicant-header">
-                        <img src="${window.getAvatarPath(app.avatar)}" class="applicant-avatar">
+                        <img src="${window.getAvatarPath(app.avatar, 'worker')}" class="applicant-avatar">
                         <div class="applicant-details">
                             <h4>${app.first_name} ${app.last_name}</h4>
                             <p>Applied for: <strong>${app.job_title}</strong></p>
