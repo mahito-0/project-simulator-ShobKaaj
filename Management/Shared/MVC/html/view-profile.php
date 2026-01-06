@@ -17,7 +17,7 @@
     <script src="../js/view-profile.js"></script>
 
     <main class="container">
-        <!-- Hidden elements for JS compatibility -->
+       
         <div id="loading" style="display: <?php echo (!empty($error) || !empty($user)) ? 'none' : 'block'; ?>; text-align: center; padding: 2rem;">
             <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i>
         </div>
@@ -55,7 +55,7 @@
                 </div>
             </div>
 
-            <!-- Skills Section (Always rendered, hidden if empty) -->
+            
             <div class="profile-skills" style="margin-top: 1.5rem; text-align: center; display: <?php echo (!empty($user['role']) && $user['role'] === 'worker' && !empty($user['skills'])) ? 'block' : 'none'; ?>;" id="skillsSection">
                 <h3>Skills</h3>
                 <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:0.5rem; justify-content: center;" id="skillsList">
@@ -67,7 +67,7 @@
                 </div>
             </div>
 
-            <!-- Worker Stats -->
+        
             <div id="workerStats" class="profile-stats" style="display: <?php echo (!empty($user['role']) && $user['role'] === 'worker') ? 'grid' : 'none'; ?>;">
                 <div class="stat-box">
                     <div id="jobsCompleted" class="stat-value"><?php echo $stats['completed_jobs'] ?? 0; ?></div>
@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            <!-- Client Stats -->
+    
             <div id="clientStats" class="profile-stats" style="display: <?php echo (!empty($user['role']) && $user['role'] === 'client') ? 'grid' : 'none'; ?>;">
                 <div class="stat-box">
                     <div id="jobsPosted" class="stat-value"><?php echo $stats['jobs_posted'] ?? 0; ?></div>
@@ -95,7 +95,7 @@
                 </div>
             </div>
 
-            <!-- Reviews Section -->
+        
             <div id="reviewsSection" class="reviews-section" style="display: <?php echo (!empty($user['role']) && $user['role'] === 'worker') ? 'block' : 'none'; ?>;">
                 <h3>Reviews</h3>
                 <div id="reviewsList" class="reviews-list">
