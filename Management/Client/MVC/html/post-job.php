@@ -1,3 +1,76 @@
+<?php
+session_start();
+// Adjust path to config
+require_once '../../../Shared/MVC/db/config.php';
+
+// Auth Check: Only Clients
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'client') {
+    // Redirect to auth or dashboard if not allowed
+    header("Location: ../../../Shared/MVC/html/auth.php");
+    exit;
+}
+
+$title = $category = $budget = $description = "";
+$title_err = $category_err = $budget_err = $desc_err = "";
+$success_msg = $error_msg = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    // 1. Get Client ID
+    $client_id = $_SESSION['user_id'];
+
+    // 2. Validate Inputs
+    // Title
+    if (empty(trim($_POST["title"]))) {
+        $title_err = "Please enter a job title.";
+    } else {
+        $title = trim($_POST["title"]);
+    }
+
+    // Category
+    if (empty(trim($_POST["category"]))) {
+        $category_err = "Please select a category.";
+    } else {
+        $category = trim($_POST["category"]);
+    }
+
+    // Budget
+    if (empty(trim($_POST["budget"]))) {
+        $budget_err = "Please enter a budget.";
+    } else {
+        $budget = trim($_POST["budget"]);
+    }
+
+    // Description
+    if (empty(trim($_POST["description"]))) {
+        $desc_err = "Please enter a job description.";
+    } else {
+        $description = trim($_POST["description"]);
+    }
+
+    // 3. Insert if no errors
+    if (empty($title_err) && empty($category_err) && empty($budget_err) && empty($desc_err)) {
+
+        // Prepare SQL - using defaults for location/deadline as they aren't in form yet
+        $sql = "INSERT INTO jobs (client_id, title, description, budget, category, status, created_at) VALUES (?, ?, ?, ?, ?, 'open', NOW())";
+
+        if ($stmt = $conn->prepare($sql)) {
+            $stmt->bind_param("issss", $client_id, $title, $description, $budget, $category);
+
+            if ($stmt->execute()) {
+                // Success - Redirect to Dashboard
+                header("Location: client-dashboard.php");
+                exit;
+            } else {
+                $error_msg = "Something went wrong. Please try again later.";
+            }
+            $stmt->close();
+        } else {
+            $error_msg = "Database prepare error: " . $conn->error;
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +82,7 @@
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- Styles -->
@@ -22,67 +95,88 @@
 
     <div id="navbar-container"></div>
 
-    <main class="container" style="margin-top: 100px; max-width: 800px;">
-        <div class="card" style="padding: 2rem;">
-            <div class="form-header" style="margin-bottom: 2rem;">
-                <h1>Post a New Job</h1>
-                <p style="color: var(--text-secondary);">Fill in the details to find the best talent.</p>
+    <main class="container split-layout">
+
+        <!-- Sidebar: Tips -->
+        <aside class="layout-sidebar">
+            <div class="tips-box">
+                <h3><i class="far fa-lightbulb"></i> Posting Tips</h3>
+                <ul class="tips-list">
+                    <li><strong>Be Specific:</strong> Provide a clear and detailed description of the work.</li>
+                    <li><strong>Set a Realistic Budget:</strong> Fair prices attract better quality freelancers.</li>
+                    <li><strong>Choose the Right Category:</strong> Helps the right workers find your job.</li>
+                    <li><strong>Double Check:</strong> Review your post for accuracy before submitting.</li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content: Form -->
+        <div class="layout-content">
+            <div class="sidebar-header" style="margin-bottom: 2rem;">
+                <h1 class="page-title">Post a <span class="highlight">New Job</span></h1>
+                <p class="page-subtitle">Find the best talent for your project today. It only takes a few minutes.</p>
+                <?php if ($error_msg): ?>
+                    <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--error); color: var(--error); padding: 1rem; border-radius: var(--radius); margin-top: 1rem;">
+                        <i class="fas fa-exclamation-circle"></i> <?php echo $error_msg; ?>
+                    </div>
+                <?php endif; ?>
             </div>
 
-            <form id="jobForm">
-                <div class="form-group">
-                    <label class="label">Job Title</label>
-                    <input type="text" name="title" class="input" placeholder="e.g. Need a Web Developer for E-commerce site" required>
-                </div>
+            <div class="auth-card">
+                <form id="postJobForm" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
 
-                <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
                     <div class="form-group">
-                        <label class="label">Category</label>
-                        <select name="category" class="input" required style="cursor: pointer;">
-                            <option value="" disabled selected>Select Category</option>
-                            <option value="Web Development">Web Development</option>
-                            <option value="Graphic Design">Graphic Design</option>
-                            <option value="Digital Marketing">Digital Marketing</option>
-                            <option value="Writing">Writing</option>
-                            <option value="Data Entry">Data Entry</option>
-                            <option value="IT Support">IT Support</option>
-                            <option value="tutoring">Tutoring</option>
-                            <option value="delivery">Delivery</option>
-                            <option value="repairs">Repairs</option>
-                            <option value="household">Household</option>
-                            <option value="design">Design & Creative</option>
-                            <option value="other">Other</option>
-                        </select>
+                        <label>Job Title</label>
+                        <input type="text" name="title" class="input" placeholder="e.g. Need a Web Developer for E-commerce site" value="<?php echo htmlspecialchars($title); ?>" required>
+                        <span style="color: var(--error); font-size: 0.85rem;"><?php echo $title_err; ?></span>
                     </div>
 
-                    <div class="form-group">
-                        <label class="label">Budget (৳)</label>
-                        <div class="currency-input">
-                            <span class="currency-symbol">৳</span>
-                            <input type="number" name="budget" class="input" placeholder="5000" min="100" required>
+                    <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select name="category" class="select" required>
+                                <option value="" disabled <?php echo empty($category) ? 'selected' : ''; ?>>Select Category</option>
+                                <?php
+                                $categories = ["Web Development", "Graphic Design", "Digital Marketing", "Writing", "Data Entry", "IT Support", "tutoring", "delivery", "repairs", "household", "design", "other"];
+                                foreach ($categories as $cat) {
+                                    $selected = ($category == $cat) ? 'selected' : '';
+                                    echo "<option value=\"$cat\" $selected>" . ucfirst($cat) . "</option>";
+                                }
+                                ?>
+                            </select>
+                            <span style="color: var(--error); font-size: 0.85rem;"><?php echo $category_err; ?></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Budget (৳)</label>
+                            <div class="currency-input">
+                                <span class="currency-symbol">৳</span>
+                                <input type="number" name="budget" class="input" placeholder="5000" min="100" value="<?php echo htmlspecialchars($budget); ?>" required>
+                            </div>
+                            <span style="color: var(--error); font-size: 0.85rem;"><?php echo $budget_err; ?></span>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="label">Description</label>
-                    <textarea name="description" class="input" rows="6" placeholder="Describe the project requirements, deliverables, and timeline..." required></textarea>
-                </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="description" class="textarea input" rows="8" placeholder="Describe the project requirements, deliverables, and timeline..." required><?php echo htmlspecialchars($description); ?></textarea>
+                        <span style="color: var(--error); font-size: 0.85rem;"><?php echo $desc_err; ?></span>
+                    </div>
 
-                <div class="form-actions" style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
-                    <a href="client-dashboard.php" class="btn outline">Cancel</a>
-                    <button type="submit" class="btn primary btn-submit">
-                        Post Job Now <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </form>
+                    <div class="form-actions">
+                        <a href="client-dashboard.php" class="btn outline">Cancel</a>
+                        <button type="submit" class="btn primary btn-submit">
+                            Post Job Now <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </main>
 
     <!-- Scripts -->
     <script src="/project-simulator-ShobKaaj/Management/Shared/MVC/js/utils.js"></script>
     <script src="/project-simulator-ShobKaaj/Management/Shared/MVC/js/navbar.js"></script>
-    <script src="../js/post-job.js" defer></script>
 </body>
 
 </html>

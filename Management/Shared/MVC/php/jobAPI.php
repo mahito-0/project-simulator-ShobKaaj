@@ -308,7 +308,21 @@ class JobAPI
         $sql = "INSERT INTO jobs (client_id, title, description, budget, category, location, deadline, status, created_at) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, 'open', NOW())";
 
-        $stmt = $this->db->prepare($sql);
+        try {
+            $stmt = $this->db->prepare($sql);
+        } catch (Exception $e) {
+            // Debugging: Find out which DB we are connected to
+            $dbNameResult = $this->db->query("SELECT DATABASE()");
+            $currentDb = $dbNameResult ? $dbNameResult->fetch_row()[0] : 'unknown';
+
+            $this->sendResponse('error', 'Prepare failed in DB [' . $currentDb . ']: ' . $e->getMessage());
+        }
+
+        if (!$stmt) {
+            $dbNameResult = $this->db->query("SELECT DATABASE()");
+            $currentDb = $dbNameResult ? $dbNameResult->fetch_row()[0] : 'unknown';
+            $this->sendResponse('error', 'Prepare failed (no exception) in DB [' . $currentDb . ']: ' . $this->db->error);
+        }
         // Note: location/deadline might be empty string, which is fine if DB column is VARCAR/DATE
         $stmt->bind_param("issssss", $clientId, $title, $desc, $budget, $category, $location, $deadline);
 
@@ -326,7 +340,7 @@ class JobAPI
             $this->sendResponse('error', 'Job ID required');
         }
 
-        $sql = "SELECT j.*, u.first_name, u.last_name, u.avatar, u.is_verified 
+        $sql = "SELECT j.*, u.first_name, u.last_name, u.avatar 
                 FROM jobs j 
                 JOIN users u ON j.client_id = u.id 
                 WHERE j.id = ?";
