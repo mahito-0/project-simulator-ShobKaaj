@@ -71,6 +71,10 @@ class JobAPI
                 $this->ApplyForJob();
                 break;
 
+            case 'get_categorized_worker_jobs':
+                $this->GetCategorizedWorkerJobs();
+                break;
+
             case 'complete_job':
                 $this->sendResponse('success', 'will be implemented later');
                 // will be implemented later
@@ -378,6 +382,64 @@ class JobAPI
         } else {
             $this->sendResponse('error', 'Failed to apply: ' . $this->db->error);
         }
+    }
+
+
+    function GetCategorizedWorkerJobs()
+    {
+        $workerId = $this->getInput('worker_id');
+        if (!$workerId) {
+            $this->sendResponse('error', 'Worker ID is required.');
+        }
+
+        // 1. Fetch Completed Jobs
+        // Jobs where the worker was hired and the job status is 'completed'
+        $sqlCompleted = "SELECT j.*, u.first_name, u.last_name, u.avatar 
+                         FROM applications a 
+                         JOIN jobs j ON a.job_id = j.id 
+                         JOIN users u ON j.client_id = u.id
+                         WHERE a.worker_id = ? AND j.status = 'completed'
+                         ORDER BY j.created_at DESC";
+
+        $stmtCompleted = $this->db->prepare($sqlCompleted);
+        $stmtCompleted->bind_param("i", $workerId);
+        $stmtCompleted->execute();
+        $completedJobs = $stmtCompleted->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        // 2. Fetch Running Jobs (Active/In Progress)
+        // Jobs where the worker has been hired (application accepted) and job is in progress
+        $sqlRunning = "SELECT j.*, a.bid_amount, u.first_name, u.last_name, u.avatar 
+                       FROM applications a 
+                       JOIN jobs j ON a.job_id = j.id 
+                       JOIN users u ON j.client_id = u.id
+                       WHERE a.worker_id = ? AND j.status = 'in_progress' AND a.status = 'accepted'
+                       ORDER BY j.created_at DESC";
+
+        $stmtRunning = $this->db->prepare($sqlRunning);
+        $stmtRunning->bind_param("i", $workerId);
+        $stmtRunning->execute();
+        $runningJobs = $stmtRunning->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        // 3. Fetch Applied Jobs (Pending/Open)
+        // Applications that are still pending.
+        $sqlApplied = "SELECT j.*, a.bid_amount, a.status as app_status, a.created_at as applied_at, 
+                       u.first_name, u.last_name, u.avatar 
+                       FROM applications a 
+                       JOIN jobs j ON a.job_id = j.id 
+                       JOIN users u ON j.client_id = u.id
+                       WHERE a.worker_id = ? AND a.status = 'pending'
+                       ORDER BY a.created_at DESC";
+
+        $stmtApplied = $this->db->prepare($sqlApplied);
+        $stmtApplied->bind_param("i", $workerId);
+        $stmtApplied->execute();
+        $appliedJobs = $stmtApplied->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        $this->sendResponse('success', 'Categorized jobs fetched successfully', [
+            'completed' => $completedJobs,
+            'running' => $runningJobs,
+            'applied' => $appliedJobs
+        ]);
     }
 }
 
