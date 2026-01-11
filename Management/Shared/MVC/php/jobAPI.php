@@ -70,11 +70,9 @@ class JobAPI
             case 'apply':
                 $this->ApplyForJob();
                 break;
-
             case 'get_categorized_worker_jobs':
                 $this->GetCategorizedWorkerJobs();
                 break;
-
             case 'complete_job':
                 $this->sendResponse('success', 'will be implemented later');
                 // will be implemented later
@@ -386,7 +384,7 @@ class JobAPI
         }
 
         $sql = "INSERT INTO applications (job_id, worker_id, bid_amount, cover_letter, status, created_at) 
-                VALUES (?, ?, ?, ?, 'pending', NOW())";
+                VALUES (?, ?, ?, ?, 'pending', NOW())";.
 
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param("iiss", $jobId, $workerId, $bid, $cover);
