@@ -114,7 +114,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="layout-content">
             <div class="sidebar-header" style="margin-bottom: 2rem;">
                 <h1 class="page-title">Post a <span class="highlight">New Job</span></h1>
-                <p class="page-subtitle">Find the best talent for your project today. It only takes a few minutes.</p>
                 <?php if ($error_msg): ?>
                     <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--error); color: var(--error); padding: 1rem; border-radius: var(--radius); margin-top: 1rem;">
                         <i class="fas fa-exclamation-circle"></i> <?php echo $error_msg; ?>
