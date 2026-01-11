@@ -32,6 +32,7 @@
             color: transparent;
             -webkit-text-stroke: 1px #c5aa22ff;
         }
+
         .rating-stars i.active {
             color: #c5a222ff;
             -webkit-text-stroke: 0;
@@ -74,7 +75,7 @@
 
                 <div class="form-group">
                     <label class="label">Review / Feedback</label>
-                    <textarea name="review" class="input" rows="4"
+                    <textarea name="comment" class="input" rows="4"
                         placeholder="Share your experience working with this person..." required></textarea>
                 </div>
 
@@ -115,7 +116,19 @@
 
         document.getElementById('completeJobForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            // Guard: Get logged-in user
+            const storedUser = localStorage.getItem('user');
+            const user = storedUser ? JSON.parse(storedUser) : null;
+
+            if (!user || user.role !== 'client') {
+                alert('You must be logged in as a client to perform this action.');
+                return;
+            }
+
             const formData = new FormData(e.target);
+            // Append the missing reviewer_id
+            formData.append('reviewer_id', user.id);
 
             try {
                 const response = await fetch('../../../Shared/MVC/php/jobAPI.php?action=complete_job', {
@@ -139,4 +152,5 @@
     </script>
 
 </body>
+
 </html>
