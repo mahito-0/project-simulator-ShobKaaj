@@ -37,7 +37,7 @@ async function fetchWorkers(query = '') {
                 const earnings = parseInt(worker.total_earnings || 0).toLocaleString();
 
                 cardsHtml += `
-                <div class="talent-card" onclick="window.location.href='/project-simulator-ShobKaaj/Management/Shared/MVC/html/view-profile.php?id=${worker.id}'" style="cursor:pointer;">
+                <div class="talent-card">
                     <img src="${avatar}" alt="${worker.first_name}" class="talent-avatar">
                     <h3 class="talent-name">${worker.first_name} ${worker.last_name}</h3>
                     
@@ -60,7 +60,7 @@ async function fetchWorkers(query = '') {
                         </div>
                     </div>
 
-                    <button class="btn outline view-profile-btn">View Profile</button>
+                    <button class="btn outline view-profile-btn" onclick="window.location.href='/project-simulator-ShobKaaj/Management/Shared/MVC/html/view-profile.php?id=${worker.id}'" style="cursor:pointer;">View Profile</button>
                 </div>
                 `;
             });
