@@ -1,35 +1,123 @@
 /* Post Job Page Styles - Premium Redesign */
 
 /* =========================
-   1. Page Layout
+   1. Container & Layout
    ========================= */
-.main-content {
+.container.split-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: var(--space-6);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px var(--space-6) var(--space-8);
+    /* Increased top padding to clear navbar */
     min-height: 100vh;
-    padding: 120px var(--space-5) var(--space-16);
-    background: var(--bg);
-    justify-content: center;
-    align-items: flex-start;
+    align-items: start;
 }
 
 /* =========================
-   2. Auth Card Component
+   2. Sidebar Section
    ========================= */
-.auth-card-wrapper {
-    max-width: 900px;
-    width: 100%;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
+.layout-sidebar {
+    position: sticky;
+    top: 120px;
+    height: fit-content;
 }
 
+.tips-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.tips-box h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: var(--space-4);
+}
+
+.tips-box h3 i {
+    color: var(--primary);
+    font-size: var(--fs-xl);
+}
+
+.tips-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.tips-list li {
+    color: var(--text-secondary);
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+    padding-left: var(--space-5);
+    position: relative;
+}
+
+.tips-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: bold;
+    font-size: var(--fs-base);
+}
+
+.tips-list li strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* =========================
+   3. Main Content Section
+   ========================= */
+.layout-content {
+    min-width: 0;
+}
+
+.sidebar-header {
+    margin-bottom: var(--space-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-title {
+    font-size: var(--fs-3xl);
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: var(--space-2);
+    letter-spacing: -1px;
+}
+
+.page-title .highlight {
+    background: linear-gradient(135deg, var(--primary), var(--primary-muted));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* =========================
+   4. Auth Card Component
+   ========================= */
 .auth-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: var(--space-16);
-    /* 64px */
+    padding: var(--space-6);
     border-radius: var(--radius-xl);
-    /* 24px - usually close enough to 32px or define new var if strict */
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     position: relative;
@@ -37,73 +125,31 @@
 }
 
 /* =========================
-   3. Header Section
-   ========================= */
-.card-header {
-    text-align: center;
-    margin-bottom: var(--space-12);
-}
-
-.auth-title {
-    font-size: var(--fs-4xl);
-    font-weight: 800;
-    margin-bottom: var(--space-4);
-    background: var(--text);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    letter-spacing: -1px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-}
-
-.auth-subtitle {
-    color: var(--text-secondary);
-    font-size: var(--fs-lg);
-    font-weight: 400;
-}
-
-/* =========================
-   4. Form Grid & Layout
-   ========================= */
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-8);
-}
-
-.form-group.full-width {
-    grid-column: span 2;
-}
-
-/* =========================
    5. Form Elements
    ========================= */
+.form-group {
+    margin-bottom: var(--space-5);
+}
+
 .form-group label {
     display: block;
     margin-bottom: var(--space-2);
     font-weight: 600;
-    color: var(--text-secondary);
-    font-size: var(--fs-sm);
-    text-transform: uppercase;
+    color: var(--text);
+    font-size: var(--fs-xs);
     letter-spacing: 0.5px;
-}
-
-.label-required::after {
-    content: "*";
-    color: var(--primary);
-    margin-left: 4px;
+    text-transform: uppercase;
 }
 
 .input,
 .textarea,
 .select {
     width: 100%;
-    height: auto;
-    /* Fix for base.css fixed height clipping text with large padding */
-    background: rgba(0, 0, 0, 0.2);
+    height: 42px;
+    background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-lg);
-    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius);
+    padding: 0 var(--space-4);
     color: var(--text);
     font-size: var(--fs-base);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -111,10 +157,15 @@
     font-family: inherit;
 }
 
+.input::placeholder,
+.textarea::placeholder {
+    color: var(--text-muted);
+}
+
 .input:hover,
 .textarea:hover,
 .select:hover {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     border-color: rgba(255, 255, 255, 0.2);
 }
 
@@ -122,24 +173,27 @@
 .textarea:focus,
 .select:focus {
     border-color: var(--primary);
-    background: rgba(16, 185, 129, 0.05);
-    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
-    transform: translateY(-2px);
+    background: rgba(74, 124, 89, 0.1);
+    box-shadow: 0 0 0 4px rgba(74, 124, 89, 0.15);
+    transform: translateY(-1px);
 }
 
 .textarea {
     resize: vertical;
-    min-height: 150px;
+    min-height: 120px;
+    height: auto;
+    padding: var(--space-3) var(--space-4);
     line-height: 1.6;
 }
 
-/* Select Dropdown Styling */
 .select {
     appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23a1a1aa' d='M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right var(--space-5) center;
-    background-size: var(--space-5);
+    background-position: right var(--space-4) center;
+    background-size: 14px;
     cursor: pointer;
+    padding-right: var(--space-10);
 }
 
 .select option {
@@ -149,12 +203,71 @@
 }
 
 /* =========================
-   6. Form Actions
+   6. Currency Input
+   ========================= */
+.currency-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.currency-symbol {
+    position: absolute;
+    left: var(--space-4);
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: var(--fs-base);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.currency-input .input {
+    padding-left: var(--space-8);
+}
+
+/* =========================
+   7. Form Actions
    ========================= */
 .form-actions {
-    margin-top: var(--space-12);
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: flex-end;
-    gap: var(--space-5);
+    gap: var(--space-3);
     align-items: center;
+}
+
+.btn-submit {
+    background: var(--primary);
+    border: 1px solid var(--primary-hover);
+    color: white;
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    padding: 0 var(--space-6);
+    height: 42px;
+    /* Match input height */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-submit:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 124, 89, 0.4);
+}
+
+.btn-submit i {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-submit:hover i {
+    transform: translateX(4px);
+}
+
+/* =========================
+   8. Grid Layout for Form Fields
+   ========================= */
+.grid {
+    display: grid;
+    gap: var(--space-5);
 }

@@ -46,7 +46,10 @@ project-simulator-ShobKaaj/
 │   │   └── MVC/ (css, html, js, php)
 │   ├── Shared/         # Common resources (Auth, Messaging, Navbar)
 │   │   └── MVC/ (css, html, js, php)
+│   ├── Admin/         # Admin-specific logic and views
+│   │   └── MVC/ (css, html, js, php)
 ├── README.md           # Project documentation
+├── FEATURES.md           # Project FEATURES
 
 ```
 

@@ -156,7 +156,7 @@ function renderNavbar(user) {
                 { href: `${workerPath}/find-work.php`, text: 'Find Work', auth: true },
                 { href: `${clientPath}/find-talent.php`, text: 'Find Workers', auth: true, role: 'client' },
                 // My Jobs depends on Role
-                { href: user.role === 'client' ? `${clientPath}/my-posted-jobs.php` : `${workerPath}/my-active-jobs.php`, text: 'My Jobs', auth: true },
+                { href: user.role === 'client' ? `${clientPath}/my-posted-jobs.php` : `${workerPath}/my-jobs.php`, text: 'My Jobs', auth: true },
                 { href: `${sharedPath}/messages.php`, text: 'Messages', auth: true },
                 { href: `${sharedPath}/notifications.php`, text: 'Notifications', auth: true },
 
