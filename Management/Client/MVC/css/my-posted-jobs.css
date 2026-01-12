@@ -1,6 +1,10 @@
-/* My Posted Jobs Page Styles */
+/* --- Layout & Containers --- */
+.my-jobs-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
 
-/* Header Section */
 .page-header {
     display: flex;
     justify-content: space-between;
@@ -16,56 +20,75 @@
     color: var(--text);
 }
 
-#page-subtitle {
+.page-subtitle {
     color: var(--text-muted);
     font-size: var(--fs-base);
 }
 
-/* Tabs Navigation */
-.tabs-container {
-    margin-bottom: var(--space-6);
-}
-
-.tabs {
-    display: flex;
+.panels-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-6);
-    border-bottom: 1px solid var(--line);
+    align-items: start;
 }
 
-.tab-btn {
+@media (max-width: 1024px) {
+    .panels-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.job-panel {
     background: transparent;
-    border: none;
-    padding: var(--space-3) var(--space-1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.panel-header {
+    margin-bottom: var(--space-4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid var(--line);
+}
+
+.panel-title {
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-bold);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.count-badge {
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: var(--fs-xs);
+    background: var(--surface-elevated);
     color: var(--text-secondary);
-    font-size: var(--fs-base);
-    font-weight: var(--fw-medium);
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all var(--duration-fast);
+    border: 1px solid var(--line);
 }
 
-.tab-btn:hover {
-    color: var(--primary);
-}
-
-.tab-btn.active {
-    color: var(--primary);
-    border-bottom-color: var(--primary);
-}
-
-/* Job List Layout */
-.job-list {
+.panel-content {
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
+    min-height: 200px;
 }
 
+/* --- Job Card Component --- */
 .job-card {
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
-    padding: var(--space-6);
+    padding: var(--space-5);
     transition: transform var(--duration-fast), box-shadow var(--duration-fast), border-color var(--duration-fast);
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
 }
 
 .job-card:hover {
@@ -78,54 +101,59 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-3);
 }
 
 .job-info h3 {
-    margin-bottom: var(--space-2);
+    margin: 0 0 var(--space-2);
     color: var(--text);
-    font-size: var(--fs-xl);
+    font-size: var(--fs-base);
+    font-weight: var(--fw-bold);
+    line-height: 1.4;
 }
 
 .job-meta {
     display: flex;
-    gap: var(--space-4);
-    color: var(--text-muted);
-    font-size: var(--fs-sm);
     flex-wrap: wrap;
+    gap: var(--space-3);
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+    margin-bottom: var(--space-3);
 }
 
 .meta-item {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: 4px;
 }
 
 .meta-item i {
     color: var(--primary);
+    font-size: 0.9em;
 }
 
-/* Status Badges */
-.job-status {
-    padding: 6px 12px;
+.job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--line);
+    margin-top: auto;
+}
+
+.job-budget {
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-bold);
+    color: var(--text);
+}
+
+.status-badge {
+    padding: 4px 10px;
     border-radius: var(--radius-full);
-    font-size: var(--fs-xs);
+    font-size: 11px;
     font-weight: var(--fw-bold);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    white-space: nowrap;
-}
-
-.status-open {
-    background: var(--status-open-bg);
-    color: var(--status-open-text);
-    border: 1px solid var(--status-open-border);
-}
-
-.status-in_progress {
-    background: var(--status-assigned-bg);
-    color: var(--status-assigned-text);
-    border: 1px solid var(--status-assigned-border);
 }
 
 .status-completed {
@@ -134,16 +162,53 @@
     border: 1px solid var(--status-completed-border);
 }
 
-.job-budget {
-    font-size: var(--fs-xl);
-    font-weight: var(--fw-bold);
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
+.status-in_progress,
+.status-running {
+    background: var(--status-assigned-bg);
+    color: var(--status-assigned-text);
+    border: 1px solid var(--status-assigned-border);
 }
 
-/* Applications Grid */
+.status-open {
+    background: var(--status-open-bg);
+    color: var(--status-open-text);
+    border: 1px solid var(--status-open-border);
+}
+
+.status-applied {
+    background: var(--warning-subtle);
+    color: var(--warning-muted);
+    border: 1px solid var(--warning);
+}
+
+.status-rejected {
+    background: var(--error-subtle);
+    color: var(--error);
+    border: 1px solid var(--error);
+}
+
+.status-accepted {
+    background: var(--success-subtle);
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+.empty-state {
+    text-align: center;
+    padding: var(--space-8) var(--space-4);
+    color: var(--text-muted);
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--line);
+}
+
+.empty-state i {
+    font-size: 2rem;
+    margin-bottom: var(--space-2);
+    opacity: 0.5;
+}
+
+/* --- Proposals Section (for Client) --- */
 .applicant-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -257,4 +322,17 @@
 .badge.error {
     background: var(--error-subtle);
     color: var(--error);
+}
+
+/* Loading State */
+.loading-state {
+    text-align: center;
+    padding: 4rem;
+    color: var(--text-secondary);
+}
+
+.loading-state i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
 }
