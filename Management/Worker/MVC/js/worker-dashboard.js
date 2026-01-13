@@ -74,6 +74,7 @@ async function renderWorkerStats(container) {
     `;
 
     try {
+        // AJAX: Fetch worker stats
         const response = await fetch(`${basePath}jobAPI.php?action=get_worker_stats&worker_id=${user.id}`);
         const result = await response.json();
 
@@ -103,6 +104,7 @@ async function renderWorkerJobs() {
     const user = JSON.parse(localStorage.getItem('user'));
 
     try {
+        // AJAX: Fetch worker history
         const response = await fetch(`${basePath}jobAPI.php?action=get_worker_history&worker_id=${user.id}`);
         const result = await response.json();
 
@@ -145,6 +147,7 @@ async function renderWorkerApplications(user) {
     if (!list) return;
 
     try {
+        // AJAX: Fetch worker applications
         const response = await fetch(`${basePath}jobAPI.php?action=get_worker_applications&worker_id=${user.id}`);
         const result = await response.json();
 

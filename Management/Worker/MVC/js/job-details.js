@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Fetch details
     try {
         const basePath = '/project-simulator-ShobKaaj/Management/Shared/MVC/php/';
+        // AJAX: Fetch job details
         const response = await fetch(`${basePath}jobAPI.php?action=get_job&id=${jobId}`);
         const result = await response.json();
 

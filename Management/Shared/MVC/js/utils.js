@@ -8,6 +8,7 @@ const API = {
         try {
             // Adjust path based on where we are being called from
             // Assuming current page is in /html/ or root
+            // AJAX request to submit form data
             const response = await fetch(`../php/authAPI.php?action=${action}`, {
                 method: 'POST',
                 body: formData
@@ -28,6 +29,7 @@ const API = {
     // Post JSON data
     post: async (action, data) => {
         try {
+            // AJAX request to send JSON data
             const response = await fetch(`../php/authAPI.php?action=${action}`, {
                 method: 'POST',
                 headers: {

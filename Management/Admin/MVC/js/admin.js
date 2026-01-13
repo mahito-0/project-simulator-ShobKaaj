@@ -17,17 +17,39 @@ document.addEventListener('DOMContentLoaded', () => {
         refreshBtn: document.getElementById('refreshBtn')
     };
 
+    // Date Filter logic
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+    const filterBtn = document.getElementById('filterBtn');
+
+    // Set default dates (Last 7 days)
+    const today = new Date();
+    const lastWeek = new Date();
+    lastWeek.setDate(today.getDate() - 6);
+
+    // Check if inputs exist (to avoid errors if HTML not updated yet)
+    if (startDateInput && endDateInput) {
+        startDateInput.valueAsDate = lastWeek;
+        endDateInput.valueAsDate = today;
+        filterBtn.addEventListener('click', loadAnalytics);
+    }
+
     els.refreshBtn.addEventListener('click', loadData);
 
     loadData();
 
     async function loadAnalytics() {
+        const start = startDateInput ? startDateInput.value : '';
+        const end = endDateInput ? endDateInput.value : '';
+
         try {
-            const res = await fetch('../php/adminAPI.php?action=get_job_analytics');
+            // AJAX request to fetch job analytics
+            const res = await fetch(`../php/adminAPI.php?action=get_job_analytics&start_date=${start}&end_date=${end}`);
             const data = await res.json();
 
             if (data.status === 'success') {
-                renderChart(data.analytics);
+                const title = `Jobs Posted (${new Date(start).toLocaleDateString()} - ${new Date(end).toLocaleDateString()})`;
+                renderChart(data.analytics, title);
             }
         } catch (e) {
             console.error("Failed to load analytics", e);
@@ -35,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let jobChart = null;
-    function renderChart(analyticsData) {
+    function renderChart(analyticsData, titleText) {
         const ctx = document.getElementById('jobAnalyticsChart').getContext('2d');
 
         // Destroy existing chart if it exists to avoid overlaps on refresh
@@ -69,12 +91,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     title: {
                         display: true,
-                        text: 'Jobs Posted (Last 7 Days)'
+                        text: titleText || 'Jobs Posted'
                     },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
-                    }
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
                 },
                 scales: {
                     y: {
@@ -112,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadStats() {
         try {
+            // AJAX request to fetch statistics
             const res = await fetch('../php/adminAPI.php?action=get_stats');
             const data = await res.json();
             if (data.status === 'success') {
@@ -127,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadUsers() {
         try {
+            // AJAX request to fetch users
             const res = await fetch('../php/adminAPI.php?action=get_users');
             const data = await res.json();
             if (data.status === 'success') {
@@ -140,6 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadJobs() {
         try {
+            // AJAX request to fetch jobs
             const res = await fetch('../php/adminAPI.php?action=get_jobs');
             const data = await res.json();
             if (data.status === 'success') {
@@ -244,6 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!confirm(`Are you sure you want to ${type} this user?`)) return;
 
         try {
+            // AJAX request to update user status
             const res = await fetch('../php/adminAPI.php?action=update_status', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -267,6 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!confirm('Are you sure you want to delete this job? This cannot be undone.')) return;
 
         try {
+            // AJAX request to delete a job
             const res = await fetch('../php/adminAPI.php?action=delete_job', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

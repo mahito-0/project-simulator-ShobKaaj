@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         try {
+            // AJAX request to fetch jobs 
             const response = await fetch(`${basePath}jobAPI.php?${params.toString()}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);

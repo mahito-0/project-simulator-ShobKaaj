@@ -88,6 +88,7 @@ async function renderClientJobs() {
 
     try {
         // Fetch Jobs
+        // AJAX: Fetch client posted jobs
         const response = await fetch(`${basePath}jobAPI.php?action=my_jobs&client_id=${user.id}`);
         const result = await response.json();
 
@@ -150,6 +151,7 @@ async function renderClientApplications(user) {
     list.innerHTML = `<p class="text-muted">Loading proposals...</p>`;
 
     try {
+        // AJAX: Fetch client applications
         const response = await fetch(`${basePath}jobAPI.php?action=get_client_applications&client_id=${user.id}`);
         const result = await response.json();
 
@@ -207,6 +209,7 @@ async function rejectWorker(appId) {
         const formData = new FormData();
         formData.append('application_id', appId);
 
+        // AJAX: Reject application
         const response = await fetch(`${basePath}jobAPI.php?action=reject_application`, {
             method: 'POST',
             body: formData
@@ -233,6 +236,7 @@ async function hireWorker(appId, jobId) {
         formData.append('application_id', appId);
         formData.append('job_id', jobId);
 
+        // AJAX: Hire worker
         const response = await fetch(`${basePath}jobAPI.php?action=hire_worker`, {
             method: 'POST',
             body: formData

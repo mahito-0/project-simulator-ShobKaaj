@@ -163,10 +163,13 @@ class AdminAPI
 
     function getJobAnalytics()
     {
-        // Get jobs posted in the last 7 days
+        $startDate = $_GET['start_date'] ?? date('Y-m-d', strtotime('-6 days'));
+        $endDate = $_GET['end_date'] ?? date('Y-m-d');
+
+        // Get jobs posted in the date range
         $sql = "SELECT DATE(created_at) as date, COUNT(*) as count 
                 FROM jobs 
-                WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
+                WHERE DATE(created_at) BETWEEN '$startDate' AND '$endDate'
                 GROUP BY DATE(created_at) 
                 ORDER BY date ASC";
 
@@ -179,13 +182,18 @@ class AdminAPI
             }
         }
 
-        // Fill in missing dates with 0
+        // Fill in specific dates with 0
         $finalData = [];
         $labels = [];
-        for ($i = 6; $i >= 0; $i--) {
-            $date = date('Y-m-d', strtotime("-$i days"));
-            $labels[] = date('M d', strtotime($date)); // Format: Jan 01
-            $finalData[] = $dataMap[$date] ?? 0;
+
+        $current = strtotime($startDate);
+        $end = strtotime($endDate);
+
+        while ($current <= $end) {
+            $dateStr = date('Y-m-d', $current);
+            $labels[] = date('M d', $current);
+            $finalData[] = $dataMap[$dateStr] ?? 0;
+            $current = strtotime('+1 day', $current);
         }
 
         $this->sendResponse('success', 'Analytics data fetched', [
