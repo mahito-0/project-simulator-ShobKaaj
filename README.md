@@ -12,51 +12,88 @@
 ## Key Features
 
 ### 1. Authentication & User Management
-- **Secure Login & Registration**: robust authentication system for both Clients and Workers.
-- **Role-Based Access**: Distinct dashboards and functionalities for Clients and Workers.
+- **Secure Login & Registration**: Robust authentication system for both Clients and Workers.
+- **Role-Based Access**: Distinct dashboards and functionalities for Clients, Workers, and Admins.
 - **Profile Management**: Users can update personal details, avatars, and passwords.
+- **Password Recovery**: Forgot password feature with email verification.
 
 ### 2. Client Features
 - **Client Dashboard**: Central hub to view posted jobs, hired workers, and recent activity.
 - **Post a Job**: Detailed form to create new job listings with descriptions, requirements, and budget.
 - **Find Talent**: Searchable interface to discover and view Worker profiles.
-- **Manage Applications**: Review applications received for posted jobs.
+- **My Posted Jobs**: 3-column panel view (Completed, Running, Open) to manage all job postings.
+- **Manage Applications**: Review, hire, and reject proposals received for posted jobs.
+- **Complete Job**: Mark jobs as done and submit reviews for workers.
 
 ### 3. Worker Features
 - **Worker Dashboard**: Personalized view of applied jobs, total earnings, and stats.
 - **Find Work**: Browse available job listings with filtering options.
-- **Job Application**: View job details and apply directly through the platform.
+- **Job Details & Application**: View complete job details and submit proposals.
+- **My Jobs**: 3-column panel view (Completed, Running, Applied) to track all applications.
 - **Skill Showcase**: Workers can highlight their skills on their public profiles.
 
-### 4. Core Functionality
-- **Messaging System**: Private, real-time-like messaging between users (Client-Worker communication).
+### 4. Admin Features
+- **Admin Dashboard**: Manage users, verify accounts, and moderate content.
+- **User Management**: Activate, terminate, verify, and unverify user accounts.
+- **Platform Statistics**: View overall platform metrics.
+
+### 5. Core Functionality
 - **Public Profiles**: Publicly accessible profiles to showcase portfolios and work history.
-- **Unified Design System**: Consistent "Glassmorphism" UI with neon accents, ensuring a premium user experience across all pages.
-- **Responsive Layout**: Authorized and optimized for various screen sizes.
+- **View Profile**: Display user stats, reviews, and skills based on role.
+- **Unified Design System**: Consistent "Glassmorphism" UI with neon accents.
+- **Responsive Layout**: Optimized for desktop, tablet, and mobile devices.
 
 ## Project Structure
-The project follows a modular MVC (Model-View-Controller) structure, primarily organized within the `Management` directory:
+The project follows a modular MVC (Model-View-Controller) structure:
 
 ```
 project-simulator-ShobKaaj/
+├── Features/           # Feature documentation 
 ├── Management/
+│   ├── Admin/          # Admin-specific logic and views
+│   │   └── MVC/ (css, html, js, php)
 │   ├── Client/         # Client-specific logic and views
 │   │   └── MVC/ (css, html, js, php)
 │   ├── Worker/         # Worker-specific logic and views
 │   │   └── MVC/ (css, html, js, php)
-│   ├── Shared/         # Common resources (Auth, Messaging, Navbar)
-│   │   └── MVC/ (css, html, js, php)
-│   ├── Admin/         # Admin-specific logic and views
-│   │   └── MVC/ (css, html, js, php)
-├── README.md           # Project documentation
-├── FEATURES.md           # Project FEATURES
-
+│   └── Shared/         # Common resources (Auth, APIs, Navbar)
+│       └── MVC/ (css, html, js, php, db)
+└── README.md           # Project documentation
 ```
+
+## Feature Documentation
+All features are documented in the `Features/` directory. Each `.md` file contains:
+- **Overview**: Feature summary
+- **User Flow**: Step-by-step journey
+- **Technical Implementation**: Frontend/backend details
+- **Key Components**: UI elements and functionality
+- **Security**: Authentication and validation measures
+- **URL Structure**: Page routes and parameters
 
 ## Setup Instructions
 1.  **Database**: Import the provided SQL schema into your MySQL database.
 2.  **Config**: Ensure `config.php` has the correct database credentials.
 3.  **Run**: Host the project directory in your local server (e.g., `xampp/htdocs`) and access via browser.
+
+## Pages Overview
+
+| Page | Role | Description |
+|------|------|-------------|
+| `index.php` | Public | Landing page with platform overview |
+| `auth.php` | Public | Login and registration |
+| `forgotpass.php` | Public | Password recovery |
+| `client-dashboard.php` | Client | Client's main dashboard |
+| `post-job.php` | Client | Create new job listings |
+| `my-posted-jobs.php` | Client | Manage posted jobs |
+| `find-talent.php` | Client | Browse worker profiles |
+| `complete-job.php` | Client | Complete jobs and submit reviews |
+| `worker-dashboard.php` | Worker | Worker's main dashboard |
+| `find-work.php` | Worker | Browse available jobs |
+| `job-details.php` | Worker | View and apply to jobs |
+| `my-jobs.php` | Worker | Track applications and contracts |
+| `profile.php` | All | View/edit own profile |
+| `view-profile.php` | All | View other users' profiles |
+| `admin.php` | Admin | Admin control panel |
 
 ---
 *Generated by Antigravity Agent*

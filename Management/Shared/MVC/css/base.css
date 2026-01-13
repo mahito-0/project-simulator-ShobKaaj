@@ -17,85 +17,100 @@
    1. Variables & Settings
    ========================= */
 :root {
-  /* Core Colors & Neutrals - Market Standard Dark */
-  --bg: #09090b;
-  /* Zinc-950 - Deep, professional dark */
-  --surface: #121214;
-  /* Slightly lighter for cards */
-  --surface-elevated: #1c1c1f;
-  /* Borders/Hovers */
-  --text: #f4f4f5;
-  /* Zinc-50 */
-  --text-secondary: #a1a1aa;
-  /* Zinc-400 */
-  --text-muted: #71717a;
-  /* Zinc-500 */
+  /* Core Colors & Neutrals - Light Mode Mint Theme */
+  --bg: #f8fafc;
+  /* Slate-50 - Clean Light Background */
+  --surface: #ffffff;
+  /* White - Standard Card Background */
+  --surface-elevated: #ffffff;
+
+  /* Text Colors */
+  --text: #0f172a;
+  /* Slate-900 - Deep Black/Blue for primary text */
+  --text-secondary: #475569;
+  /* Slate-600 */
+  --text-muted: #64748b;
+  /* Slate-500 */
   --muted: var(--text-muted);
-  --line: #27272a;
-  /* Zinc-800 - Subtle dividers */
-  --hover: #27272a;
-  --hover-secondary: #3f3f46;
 
-  /* Brand / Primary - Kept as requested */
-  --primary: #4a7c59;
-  --primary-hover: #3d664a;
-  --primary-active: #2f4f39;
-  --primary-subtle: rgba(74, 124, 89, 0.1);
-  --primary-muted: #5d8f6c;
+  --line: #e2e8f0;
+  /* Slate-200 - Light Borders */
+  --hover: #f1f5f9;
+  /* Slate-100 */
+  --hover-secondary: #e2e8f0;
 
-  /* Semantic Colors - Refined for harmony */
-  --error: #ef4444;
-  /* Red-500 */
-  --error-subtle: rgba(239, 68, 68, 0.1);
-  --error-muted: #f87171;
-  --warning: #f59e0b;
-  /* Amber-500 */
-  --warning-subtle: rgba(245, 158, 11, 0.1);
-  --warning-muted: #fbbf24;
-  --success: #10b981;
+  /* Brand / Primary - Mint Green */
+  --primary: #10b981;
   /* Emerald-500 */
-  --success-subtle: rgba(16, 185, 129, 0.1);
-  --success-muted: #34d399;
+  --primary-hover: #059669;
+  /* Emerald-600 */
+  --primary-active: #047857;
+  /* Emerald-700 */
+  --primary-subtle: #d1fae5;
+  /* Emerald-100 - Light Mint Background */
+  --primary-muted: #6ee7b7;
+  /* Emerald-300 */
+
+  /* Semantic Colors */
+  --error: #ef4444;
+  --error-subtle: #fee2e2;
+  --error-muted: #fca5a5;
+
+  --warning: #f59e0b;
+  --warning-subtle: #fef3c7;
+  --warning-muted: #fcd34d;
+
+  --success: #10b981;
+  --success-subtle: #d1fae5;
+  --success-muted: #6ee7b7;
+
   --info: #3b82f6;
-  /* Blue-500 */
-  --info-subtle: rgba(59, 130, 246, 0.1);
-  --info-muted: #60a5fa;
+  --info-subtle: #dbeafe;
+  --info-muted: #93c5fd;
 
   /* Form Elements */
   --input-focus-border: var(--primary);
   --error-text: var(--error);
   --success-text: var(--success);
-  --file-input-bg: var(--bg);
+  --file-input-bg: var(--surface);
   --file-input-text: var(--text);
-  --file-input-hover-bg: var(--surface);
+  --file-input-hover-bg: var(--hover);
 
   /* UI Components */
-  --badge-bg: var(--surface-elevated);
+  --badge-bg: var(--hover);
   --badge-text: var(--text-secondary);
   --badge-border: var(--line);
-  --table-header-bg: var(--surface-elevated);
-  --table-header-text: var(--text);
-  --table-row-hover: var(--surface-elevated);
-  --conv-hover: var(--surface-elevated);
-  --conv-active: var(--surface-elevated);
-  --conv-active-border: var(--line);
-  --message-bg: var(--surface);
-  --message-me-bg: var(--primary-subtle);
+  --table-header-bg: var(--hover);
+  --table-header-text: var(--text-secondary);
+  --table-row-hover: var(--hover);
+
+  --conv-hover: var(--hover);
+  --conv-active: var(--primary-subtle);
+  --conv-active-border: transparent;
+
+  --message-bg: #f1f5f9;
+  --message-me-bg: var(--primary);
   --message-me-border: var(--primary);
-  --message-arrow-border: var(--surface);
-  --status-open-bg: var(--surface-elevated);
-  --status-open-border: var(--line);
-  --status-open-text: var(--text-secondary);
-  --status-assigned-bg: var(--info-subtle);
-  --status-assigned-border: var(--info);
-  --status-assigned-text: var(--info);
-  --status-completed-bg: var(--success-subtle);
-  --status-completed-border: var(--success);
-  --status-completed-text: var(--success);
-  --star-color: #3e4c5a;
-  --star-active-color: #667085;
-  --notification-unread-bg: #2a323d;
-  --notification-unread-border: #3e4c5a;
+  --message-arrow-border: #f1f5f9;
+
+  --status-open-bg: #f1f5f9;
+  --status-open-border: #cbd5e1;
+  --status-open-text: #64748b;
+
+  --status-assigned-bg: #dbeafe;
+  --status-assigned-border: #bfdbfe;
+  --status-assigned-text: #2563eb;
+
+  --status-completed-bg: #d1fae5;
+  --status-completed-border: #a7f3d0;
+  --status-completed-text: #059669;
+
+  --star-color: #cbd5e1;
+  --star-active-color: #fbbf24;
+
+  --notification-unread-bg: #f0fdf4;
+  /* Very light mint */
+  --notification-unread-border: #bbf7d0;
 
   /* Spacing System (Strict 4pt Grid) */
   --space-0-5: 0.125rem;
@@ -147,12 +162,12 @@
   /* 24px */
   --radius-full: 9999px;
 
-  /* Shadows - Dark Mode Premium */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-sm: 0 4px 8px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.6);
-  --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.7);
+  /* Shadows - Light Mode Soft */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
   /* Ring / Focus States */
   --ring-primary: 0 0 0 4px rgba(74, 124, 89, 0.2);
@@ -374,21 +389,14 @@ a:focus-visible {
   width: 95%;
   max-width: 1200px;
   z-index: 1000;
-  background: var(--glass-bg, rgba(0, 0, 0, 0.7));
+  background: var(--primary-subtle);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--line);
   border-radius: 20px;
   padding: 0 40px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
-}
-
-.navbar.scrolled {
-  top: 10px;
-  background: rgba(13, 17, 23, 0.9);
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-md);
 }
 
 .navbar.nav-hidden {
@@ -413,7 +421,7 @@ a:focus-visible {
   font-size: 2rem;
   font-weight: var(--fw-extrabold);
   text-decoration: none;
-  color: var(--primary);
+  color: var(--primary-active);
   letter-spacing: -0.5px;
 }
 
@@ -470,7 +478,7 @@ a:focus-visible {
 .navbar-nav {
   display: flex;
   gap: 4px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface);
   padding: 4px;
   border-radius: 99px;
   border: 1px solid var(--line);
@@ -502,8 +510,8 @@ a:focus-visible {
   color: #ffffff;
   background: var(--primary);
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(74, 124, 89, 0.3);
-  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  border-color: var(--primary);
 }
 
 /* Navbar Actions */
@@ -703,9 +711,9 @@ a:focus-visible {
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  background: var(--glass-bg-strong);
+  background: white;
   border: 2px solid var(--primary);
-  color: white;
+  color: var(--primary);
   border-radius: var(--radius);
   cursor: pointer;
   font-size: var(--fs-sm);
@@ -716,10 +724,11 @@ a:focus-visible {
   position: relative;
   overflow: hidden;
   text-decoration: none;
+  box-shadow: var(--shadow-xs);
 }
 
 .btn:hover {
-  background: rgba(255, 228, 196, 0);
+  background: var(--primary);
   border-color: var(--primary);
   color: white;
   transform: translateY(-1px);
@@ -750,9 +759,9 @@ a:focus-visible {
 }
 
 .btn.outline:hover {
-  background: var(--surface-elevated);
+  background: var(--primary-subtle);
   border-color: var(--primary);
-  color: white;
+  color: var(--primary);
 }
 
 .btn.ghost {
