@@ -17,7 +17,7 @@
     <div id="navbar-container"></div>
     <script src="/project-simulator-ShobKaaj/Management/Shared/MVC/js/navbar.js"></script>
 
-    <main class="container dashboard-container" style="margin-top: 100px; min-height: 80vh;">
+    <main class="container dashboard-container" style="margin-top: 10px; min-height: 80vh;">
         <!-- Welcome Section -->
         <div class="welcome-section" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2rem;">
             <div>
