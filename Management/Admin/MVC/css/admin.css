@@ -33,7 +33,7 @@
     width: 56px;
     height: 56px;
     border-radius: var(--radius);
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--surface);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -77,7 +77,7 @@ table {
 }
 
 th {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--bg);
     color: var(--text-secondary);
     font-weight: var(--fw-semibold);
     font-size: var(--fs-sm);
@@ -99,7 +99,7 @@ tr:last-child td {
 }
 
 tr:hover td {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--hover);
 }
 
 /* Badges */
@@ -115,26 +115,26 @@ tr:hover td {
 
 .badge.verified {
     background: var(--success-subtle);
-    color: var(--success-muted);
-    border-color: rgba(16, 185, 129, 0.2);
+    color: var(--success);
+    border-color: var(--success-muted);
 }
 
 .badge.unverified {
     background: var(--warning-subtle);
-    color: var(--warning-muted);
-    border-color: rgba(245, 158, 11, 0.2);
+    color: var(--warning);
+    border-color: var(--warning-muted);
 }
 
 .badge.terminated {
     background: var(--error-subtle);
-    color: var(--error-muted);
-    border-color: rgba(239, 68, 68, 0.2);
+    color: var(--error);
+    border-color: var(--error-muted);
 }
 
 .badge.active-status {
     background: var(--info-subtle);
-    color: var(--info-muted);
-    border-color: rgba(59, 130, 246, 0.2);
+    color: var(--info);
+    border-color: var(--info-muted);
 }
 
 /* Action Buttons Grid */
