@@ -59,6 +59,24 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
             </div>
         </div>
 
+        <!-- Job Trends -->
+        <div style="margin-top: 30px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2>Job Trends</h2>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="date" id="startDate" class="form-input" style="padding: 8px; border: 1px solid #ddd; border-radius: 6px;">
+                    <span>to</span>
+                    <input type="date" id="endDate" class="form-input" style="padding: 8px; border: 1px solid #ddd; border-radius: 6px;">
+                    <button id="filterBtn" class="btn primary sm">Filter</button>
+                </div>
+            </div>
+            <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); height: 400px;">
+                <canvas id="jobAnalyticsChart"></canvas>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
         <div style="display: grid; gap: 30px;">
             <!-- Users Table -->
             <div>

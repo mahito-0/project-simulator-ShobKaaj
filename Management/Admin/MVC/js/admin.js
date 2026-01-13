@@ -21,11 +21,94 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadData();
 
+    async function loadAnalytics() {
+        try {
+            const res = await fetch('../php/adminAPI.php?action=get_job_analytics');
+            const data = await res.json();
+
+            if (data.status === 'success') {
+                renderChart(data.analytics);
+            }
+        } catch (e) {
+            console.error("Failed to load analytics", e);
+        }
+    }
+
+    let jobChart = null;
+    function renderChart(analyticsData) {
+        const ctx = document.getElementById('jobAnalyticsChart').getContext('2d');
+
+        // Destroy existing chart if it exists to avoid overlaps on refresh
+        if (jobChart) {
+            jobChart.destroy();
+        }
+
+        jobChart = new Chart(ctx, {
+            type: 'line', // Changed from doughnut to line
+            data: {
+                labels: analyticsData.labels, // Dates
+                datasets: [{
+                    label: 'Jobs Posted',
+                    data: analyticsData.data, // Counts
+                    borderColor: '#3b82f6', // Primary Blue
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)', // Light blue fill
+                    borderWidth: 2,
+                    tension: 0.4, // Smooths the line
+                    fill: true,
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#3b82f6',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false // Hide legend for single line
+                    },
+                    title: {
+                        display: true,
+                        text: 'Jobs Posted (Last 7 Days)'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1 // No decimals for counts
+                        },
+                        grid: {
+                            display: true,
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+    }
+
     async function loadData() {
         await loadStats();
         await loadUsers();
         await loadJobs();
+        await loadAnalytics();
     }
+
 
     async function loadStats() {
         try {

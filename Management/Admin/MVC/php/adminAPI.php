@@ -47,6 +47,9 @@ class AdminAPI
             case 'update_status':
                 $this->updateStatus();
                 break;
+            case 'get_job_analytics':
+                $this->getJobAnalytics();
+                break;
             default:
                 $this->sendResponse('error', 'Invalid Action');
         }
@@ -111,9 +114,6 @@ class AdminAPI
             $this->sendResponse('error', 'Job ID required');
         }
 
-        // Ideally, check for dependencies (applications) and delete them first or use ON DELETE CASCADE
-        // For now, assuming ON DELETE CASCADE or simply trying delete.
-
         $stmt = $this->db->prepare("DELETE FROM jobs WHERE id = ?");
         $stmt->bind_param("i", $jobId);
 
@@ -159,6 +159,41 @@ class AdminAPI
         } else {
             $this->sendResponse('error', 'Database error: ' . $stmt->error);
         }
+    }
+
+    function getJobAnalytics()
+    {
+        // Get jobs posted in the last 7 days
+        $sql = "SELECT DATE(created_at) as date, COUNT(*) as count 
+                FROM jobs 
+                WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
+                GROUP BY DATE(created_at) 
+                ORDER BY date ASC";
+
+        $result = $this->db->query($sql);
+
+        $dataMap = [];
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $dataMap[$row['date']] = $row['count'];
+            }
+        }
+
+        // Fill in missing dates with 0
+        $finalData = [];
+        $labels = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = date('Y-m-d', strtotime("-$i days"));
+            $labels[] = date('M d', strtotime($date)); // Format: Jan 01
+            $finalData[] = $dataMap[$date] ?? 0;
+        }
+
+        $this->sendResponse('success', 'Analytics data fetched', [
+            'analytics' => [
+                'labels' => $labels,
+                'data' => $finalData
+            ]
+        ]);
     }
 }
 
