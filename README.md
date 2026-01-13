@@ -42,6 +42,7 @@
 - **View Profile**: Display user stats, reviews, and skills based on role.
 - **Unified Design System**: Consistent "Glassmorphism" UI with neon accents.
 - **Responsive Layout**: Optimized for desktop, tablet, and mobile devices.
+- **AI Chatbot Assistant**: Intelligent virtual assistant powered by local AI (Ollama) to help users navigate the platform and answer queries.
 
 ## Project Structure
 The project follows a modular MVC (Model-View-Controller) structure:
