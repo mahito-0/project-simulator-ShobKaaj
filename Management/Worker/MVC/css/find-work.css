@@ -79,10 +79,8 @@
 /* Using Base Input Style Override for Icon Positioning */
 .search-input {
     height: var(--height-lg);
-    /* Increased to 56px */
     background-color: var(--bg);
     padding: 0 var(--space-4) 0 var(--space-10);
-    /* 40px left padding for icon */
     line-height: normal;
     margin: 0;
 }
@@ -90,7 +88,6 @@
 /* Specific fix for Select to keep the arrow and left icon */
 select.search-input {
     padding-right: var(--space-10);
-    /* Space for arrow */
     appearance: none;
 }
 
@@ -113,20 +110,21 @@ select.search-input {
    5. Job Card Component
    ========================= */
 .job-card {
-    background: var(--bg);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     padding: var(--space-6);
     transition: all 0.3s ease;
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    box-shadow: var(--shadow-sm);
 }
 
 .job-card:hover {
     border-color: var(--primary);
     transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-md);
 }
 
 .job-card-header {
@@ -147,7 +145,7 @@ select.search-input {
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--line);
 }
 
 .client-name {
@@ -156,7 +154,7 @@ select.search-input {
 }
 
 .job-budget {
-    background: rgba(16, 185, 129, 0.1);
+    background: var(--primary-subtle);
     color: var(--primary);
     padding: var(--space-2) var(--space-3);
     border-radius: var(--radius-full);
@@ -193,12 +191,12 @@ select.search-input {
 }
 
 .tag {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--hover);
     padding: var(--space-1) var(--space-3);
     border-radius: var(--radius-sm);
     font-size: var(--fs-xs);
     color: var(--text-secondary);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--line);
 }
 
 /* Card Footer */
@@ -207,7 +205,7 @@ select.search-input {
     justify-content: space-between;
     align-items: center;
     padding-top: var(--space-4);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--line);
 }
 
 .job-location {
