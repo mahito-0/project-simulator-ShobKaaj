@@ -277,11 +277,11 @@ class JobAPI
                 throw new Exception("Execute failed for application update: " . $stmt->error);
             }
 
-            $stmt2 = $this->db->prepare("UPDATE jobs SET status = 'in_progress', hired_worker_id = (SELECT worker_id FROM applications WHERE id = ?) WHERE id = ?");
+            $stmt2 = $this->db->prepare("UPDATE jobs SET status = 'in_progress' WHERE id = ?");
             if (!$stmt2) {
                 throw new Exception("Prepare failed for job update: " . $this->db->error);
             }
-            $stmt2->bind_param("ii", $appId, $jobId);
+            $stmt2->bind_param("i", $jobId);
 
             if (!$stmt2->execute()) {
                 throw new Exception("Execute failed for job update: " . $stmt2->error);
