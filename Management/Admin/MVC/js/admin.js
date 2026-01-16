@@ -27,8 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
         await loadJobs();
     }
 
+
     async function loadStats() {
         try {
+            // AJAX request to fetch statistics
             const res = await fetch('../php/adminAPI.php?action=get_stats');
             const data = await res.json();
             if (data.status === 'success') {
@@ -44,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadUsers() {
         try {
+            // AJAX request to fetch users
             const res = await fetch('../php/adminAPI.php?action=get_users');
             const data = await res.json();
             if (data.status === 'success') {
@@ -57,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadJobs() {
         try {
+            // AJAX request to fetch jobs
             const res = await fetch('../php/adminAPI.php?action=get_jobs');
             const data = await res.json();
             if (data.status === 'success') {
@@ -161,6 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!confirm(`Are you sure you want to ${type} this user?`)) return;
 
         try {
+            // AJAX request to update user status
             const res = await fetch('../php/adminAPI.php?action=update_status', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -184,6 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!confirm('Are you sure you want to delete this job? This cannot be undone.')) return;
 
         try {
+            // AJAX request to delete a job
             const res = await fetch('../php/adminAPI.php?action=delete_job', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

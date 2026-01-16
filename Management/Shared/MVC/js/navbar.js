@@ -146,6 +146,7 @@ function renderNavbar(user) {
         if (user.role === 'admin') {
             navItems = [
                 { href: `/project-simulator-ShobKaaj/Management/Admin/MVC/html/admin.php`, text: 'Dashboard', auth: true },
+                { href: `/project-simulator-ShobKaaj/Management/Admin/MVC/html/analytics.php`, text: 'Analytics', auth: true },
             ];
         } else {
             // Dashboard depends on Role
