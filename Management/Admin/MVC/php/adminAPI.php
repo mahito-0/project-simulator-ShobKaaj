@@ -53,6 +53,9 @@ class AdminAPI
             case 'get_user_analytics':
                 $this->getUserAnalytics();
                 break;
+            case 'get_revenue_analytics':
+                $this->getRevenueAnalytics();
+                break;
             default:
                 $this->sendResponse('error', 'Invalid Action');
         }
@@ -245,6 +248,50 @@ class AdminAPI
         }
 
         $this->sendResponse('success', 'User analytics fetched', [
+            'analytics' => [
+                'labels' => $labels,
+                'data' => $finalData
+            ]
+        ]);
+    }
+
+    function getRevenueAnalytics()
+    {
+        $startDate = $_GET['start_date'] ?? date('Y-m-d', strtotime('-6 days'));
+        $endDate = $_GET['end_date'] ?? date('Y-m-d');
+
+        // Get revenue from completed jobs in the date range
+        $sql = "SELECT DATE(created_at) as date, SUM(budget) as revenue 
+                FROM jobs 
+                WHERE status = 'completed'
+                AND DATE(created_at) BETWEEN '$startDate' AND '$endDate'
+                GROUP BY DATE(created_at) 
+                ORDER BY date ASC";
+
+        $result = $this->db->query($sql);
+
+        $dataMap = [];
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $dataMap[$row['date']] = $row['revenue'];
+            }
+        }
+
+        // Fill in specific dates with 0
+        $finalData = [];
+        $labels = [];
+
+        $current = strtotime($startDate);
+        $end = strtotime($endDate);
+
+        while ($current <= $end) {
+            $dateStr = date('Y-m-d', $current);
+            $labels[] = date('M d', $current);
+            $finalData[] = $dataMap[$dateStr] ?? 0;
+            $current = strtotime('+1 day', $current);
+        }
+
+        $this->sendResponse('success', 'Revenue analytics fetched', [
             'analytics' => [
                 'labels' => $labels,
                 'data' => $finalData

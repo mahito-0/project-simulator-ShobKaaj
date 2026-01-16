@@ -216,4 +216,119 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Revenue Analytics
+    const revenueEls = {
+        startDate: document.getElementById('revenueStartDate'),
+        endDate: document.getElementById('revenueEndDate'),
+        filterBtn: document.getElementById('revenueFilterBtn')
+    };
+
+    if (revenueEls.startDate && revenueEls.endDate && revenueEls.filterBtn) {
+        revenueEls.startDate.valueAsDate = lastWeek;
+        revenueEls.endDate.valueAsDate = today;
+        revenueEls.filterBtn.addEventListener('click', loadRevenueAnalytics);
+    }
+
+    // Add to refresh button as well
+    if (els.refreshBtn) {
+        els.refreshBtn.addEventListener('click', () => {
+            // Re-call existing loaders if needed, but important to add new one
+            loadRevenueAnalytics();
+        });
+    }
+
+    loadRevenueAnalytics();
+
+    async function loadRevenueAnalytics() {
+        const start = revenueEls.startDate ? revenueEls.startDate.value : '';
+        const end = revenueEls.endDate ? revenueEls.endDate.value : '';
+
+        try {
+            const res = await fetch(`../php/adminAPI.php?action=get_revenue_analytics&start_date=${start}&end_date=${end}`);
+            const data = await res.json();
+
+            if (data.status === 'success') {
+                const title = `Revenue (${new Date(start).toLocaleDateString()} - ${new Date(end).toLocaleDateString()})`;
+                renderRevenueChart(data.analytics, title);
+            }
+        } catch (e) {
+            console.error("Failed to load revenue analytics", e);
+        }
+    }
+
+    let revenueChart = null;
+    function renderRevenueChart(analyticsData, titleText) {
+        const ctx = document.getElementById('revenueAnalyticsChart').getContext('2d');
+
+        if (revenueChart) {
+            revenueChart.destroy();
+        }
+
+        revenueChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: analyticsData.labels,
+                datasets: [{
+                    label: 'Revenue (৳)',
+                    data: analyticsData.data,
+                    borderColor: '#f59e0b', // Amber/Orange
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#f59e0b',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: titleText || 'Revenue'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += new Intl.NumberFormat('en-BD', { style: 'currency', currency: 'BDT' }).format(context.parsed.y);
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: true,
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
+                        ticks: {
+                            callback: function (value) {
+                                return '৳' + value;
+                            }
+                        }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+    }
+
 });
