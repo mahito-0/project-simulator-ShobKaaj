@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         create: async (data) => {
             try {
                 const basePath = '/project-simulator-ShobKaaj/Management/Shared/MVC/php/';
+                // AJAX: Create a new job
                 const response = await fetch(`${basePath}jobAPI.php?action=create`, {
                     method: 'POST',
                     body: data

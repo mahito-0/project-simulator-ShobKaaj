@@ -23,6 +23,7 @@ async function fetchWorkers(query = '') {
     try {
         const basePath = '/project-simulator-ShobKaaj/Management/Shared/MVC/php/';
         const url = `${basePath}authAPI.php?action=get_workers&search=${encodeURIComponent(query)}`;
+        // AJAX: Fetch list of workers
         const response = await fetch(url);
         const result = await response.json();
 
