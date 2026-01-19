@@ -14,6 +14,28 @@ if (loginBtn) {
     });
 }
 
+// Cookie Helper Function
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+}
+
+// Check for "Remember Me" Cookie
+window.addEventListener('DOMContentLoaded', () => {
+    const rememberedEmail = getCookie('remembered_email');
+    const emailInput = document.getElementById('login-email');
+    const rememberCheckbox = document.getElementById('remember-me');
+
+    if (rememberedEmail && emailInput) {
+        emailInput.value = decodeURIComponent(rememberedEmail);
+        if (rememberCheckbox) {
+            rememberCheckbox.checked = true;
+        }
+    }
+});
+
 // Sign Up Logic
 const signUpForm = document.querySelector('.sign-up form');
 if (signUpForm) {
