@@ -17,7 +17,7 @@
     <main class="main-content">
         <div class="messenger-container">
 
-        
+
             <aside class="conversations-panel">
                 <div class="panel-header">
                     <h2>Messages</h2>
@@ -33,7 +33,7 @@
                 </div>
             </aside>
 
-            
+
             <section class="chat-panel">
                 <div id="emptyState" class="chat-empty-state">
                     <div class="empty-icon"><i class="far fa-comments"></i></div>

@@ -5,16 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Authentication - ShobKaaj</title>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Base Styles -->
     <link rel="stylesheet" href="../css/base.css">
 
-    <!-- Auth Page Specific Styles -->
     <link rel="stylesheet" href="../css/auth.css">
     <script src="../js/navbar.js"></script>
     <script src="../js/utils.js"></script>
@@ -22,7 +18,7 @@
 
 <body>
     <?php
-    // Initialize variables to avoid undefined variable warnings
+
     $first_name = $first_name ?? '';
     $last_name = $last_name ?? '';
     $email = $email ?? '';
@@ -40,7 +36,7 @@
 
     <main class="auth-wrapper">
         <div class="auth-container" id="container">
-            <!-- Sign Up Form -->
+            // Sign Up Form
             <div class="form-container sign-up">
                 <form action="auth.php" method="POST">
                     <h1>Create Account</h1>
@@ -75,7 +71,7 @@
                 </form>
             </div>
 
-            <!-- Sign In Form -->
+            //Sign In Form
             <div class="form-container sign-in">
                 <form action="auth.php" method="POST">
                     <h1>Sign In</h1>
@@ -94,7 +90,7 @@
                 </form>
             </div>
 
-            <!-- Toggle Overlay -->
+            // Toggle Overlay
             <div class="toggle-container">
                 <div class="toggle">
                     <div class="toggle-panel toggle-left">
@@ -112,7 +108,7 @@
         </div>
     </main>
 
-    <!-- Script -->
+    // Script
     <script src="../js/auth.js"></script>
 </body>
 

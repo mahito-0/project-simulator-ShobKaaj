@@ -136,8 +136,6 @@ function renderMessages(messages) {
     const isAtBottom = (listEl.scrollHeight - listEl.scrollTop - listEl.clientHeight) < 50;
 
     // Build the new HTML string
-    // This is still a bit simple but stops the flashing if the actual HTML string hasn't changed.
-    // For a more robust solution, we'd do a DOM diff, but string comparison is a huge upgrade from unconditional clear.
     let newHtml = '';
 
     messages.forEach(msg => {
@@ -181,7 +179,7 @@ async function sendMessage(e) {
 
         if (response.status === 'success') {
             loadMessages(); // Refresh conversation
-            loadConversations(); // Update sidebar (e.g. move to top)
+            loadConversations(); // Update sidebar
         } else {
             alert(response.message);
         }

@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <!-- Navbar will be injected automatically -->
+    <!-- Navbar will be injected by navbar.js -->
 
     <main class="main-content">
         <div class="container">

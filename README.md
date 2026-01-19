@@ -12,38 +12,37 @@
 ## Key Features
 
 ### 1. Authentication & User Management
-- **Secure Login & Registration**: Robust authentication system for both Clients and Workers.
+- **Secure Login & Registration**: Robust authentication system for both Clients and Workers [Docs](Features/AUTH_FEATURE.md).
 - **Role-Based Access**: Distinct dashboards and functionalities for Clients, Workers, and Admins.
-- **Profile Management**: Users can update personal details, avatars, and passwords.
-- **Password Recovery**: Forgot password feature with email verification.
+- **Profile Management**: Users can update personal details, avatars, and passwords [Docs](Features/PROFILE_MANAGEMENT_FEATURE.md).
+- **Password Recovery**: Forgot password feature with email verification [Docs](Features/FORGOT_PASSWORD_FEATURE.md).
 
 ### 2. Client Features
-- **Client Dashboard**: Central hub to view posted jobs, hired workers, and recent activity.
-- **Post a Job**: Detailed form to create new job listings with descriptions, requirements, and budget.
-- **Find Talent**: Searchable interface to discover and view Worker profiles.
-- **My Posted Jobs**: 3-column panel view (Completed, Running, Open) to manage all job postings.
+- **Client Dashboard**: Central hub to view posted jobs, hired workers, and recent activity [Docs](Features/CLIENT_DASHBOARD_FEATURE.md).
+- **Post a Job**: Detailed form to create new job listings with descriptions, requirements, and budget [Docs](Features/POST_JOB_FEATURE.md).
+- **Find Talent**: Searchable interface to discover and view Worker profiles [Docs](Features/FIND_TALENT_FEATURE.md).
+- **My Posted Jobs**: 3-column panel view (Completed, Running, Open) to manage all job postings [Docs](Features/MY_POSTED_JOBS_FEATURE.md).
 - **Manage Applications**: Review, hire, and reject proposals received for posted jobs.
-- **Complete Job**: Mark jobs as done and submit reviews for workers.
+- **Complete Job**: Mark jobs as done and submit reviews for workers [Docs](Features/COMPLETE_JOB_FEATURE.md).
 
 ### 3. Worker Features
-- **Worker Dashboard**: Personalized view of applied jobs, total earnings, and stats.
-- **Find Work**: Browse available job listings with filtering options.
-- **Job Details & Application**: View complete job details and submit proposals.
-- **My Jobs**: 3-column panel view (Completed, Running, Applied) to track all applications.
+- **Worker Dashboard**: Personalized view of applied jobs, total earnings, and stats [Docs](Features/WORKER_DASHBOARD_FEATURE.md).
+- **Find Work**: Browse available job listings with filtering options [Docs](Features/FIND_WORK_FEATURE.md).
+- **Job Details & Application**: View complete job details and submit proposals [Docs](Features/JOB_DETAILS_FEATURE.md) [Docs](Features/APPLY_JOB_FEATURE.md).
+- **My Jobs**: 3-column panel view (Completed, Running, Applied) to track all applications [Docs](Features/WORKER_MY_JOBS_FEATURE.md).
 - **Skill Showcase**: Workers can highlight their skills on their public profiles.
 
 ### 4. Admin Features
-- **Admin Dashboard**: Manage users, verify accounts, and moderate content.
+- **Admin Dashboard**: Manage users, verify accounts, and moderate content [Docs](Features/ADMIN_FEATURES.md).
 - **User Management**: Activate, terminate, verify, and unverify user accounts.
 - **Platform Statistics**: View overall platform metrics.
 
 ### 5. Core Functionality
 - **Public Profiles**: Publicly accessible profiles to showcase portfolios and work history.
-- **View Profile**: Display user stats, reviews, and skills based on role.
+- **View Profile**: Display user stats, reviews, and skills based on role [Docs](Features/VIEW_PROFILE_FEATURE.md).
 - **Unified Design System**: Consistent "Glassmorphism" UI with neon accents.
-- **Responsive Layout**: Optimized for desktop, tablet, and mobile devices.
 - **In-App Chat**: Real-time messaging system for Clients and Workers to communicate directly [Docs](Features/IN_APP_CHAT_FEATURE.md).
-- **AI Chatbot Assistant**: Intelligent virtual assistant powered by local AI (Ollama) to help users navigate the platform and answer queries.
+- **AI Chatbot Assistant**: Intelligent virtual assistant powered by local AI (Ollama) to help users navigate the platform and answer queries [Docs](Features/AI_CHATBOT_FEATURE.md).
 
 ## Project Structure
 The project follows a modular MVC (Model-View-Controller) structure:

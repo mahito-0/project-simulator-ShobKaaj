@@ -47,8 +47,7 @@ if (signInForm) {
             // Save user to localStorage
             localStorage.setItem('user', JSON.stringify(result.user));
 
-            // Redirect to dashboard
-            // Redirect based on role
+            // Redirect to dashboard based on role
             const basePath = '/project-simulator-ShobKaaj/Management';
             if (result.user.role === 'client') {
                 window.location.href = `${basePath}/Client/MVC/html/client-dashboard.php`;
