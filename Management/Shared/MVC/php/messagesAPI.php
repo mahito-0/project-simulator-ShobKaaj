@@ -38,7 +38,7 @@ class MessagesAPI
             return $input[$key];
         }
 
-        // 3. Try GET (only if safe, usually avoid for mutations)
+        // 3. Try GET 
         if (isset($_GET[$key])) {
             return $_GET[$key];
         }
@@ -82,7 +82,8 @@ class MessagesAPI
             $this->sendResponse('error', 'You cannot message yourself');
         }
 
-        $stmt = $this->db->prepare("INSERT INTO messages (sender_id, receiver_id, message) VALUES (?, ?, ?)");
+        $sql = "INSERT INTO messages (sender_id, receiver_id, message) VALUES (?, ?, ?)";
+        $stmt = $this->db->prepare($sql);
         if ($stmt) {
             $stmt->bind_param("iis", $this->userId, $receiverId, $message);
             if ($stmt->execute()) {
@@ -148,7 +149,8 @@ class MessagesAPI
         }
 
         // Mark as read first
-        $update = $this->db->prepare("UPDATE messages SET is_read = 1 WHERE sender_id = ? AND receiver_id = ?");
+        $sql = "UPDATE messages SET is_read = 1 WHERE sender_id = ? AND receiver_id = ?";
+        $update = $this->db->prepare($sql);
         if ($update) {
             $update->bind_param("ii", $partnerId, $this->userId);
             $update->execute();
@@ -174,7 +176,8 @@ class MessagesAPI
             $stmt->close();
 
             // Fetch partner info for header
-            $userStmt = $this->db->prepare("SELECT id, first_name, last_name, avatar, role FROM users WHERE id = ?");
+            $sql = "SELECT id, first_name, last_name, avatar, role FROM users WHERE id = ?";
+            $userStmt = $this->db->prepare($sql);
             if ($userStmt) {
                 $userStmt->bind_param("i", $partnerId);
                 $userStmt->execute();

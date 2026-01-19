@@ -111,9 +111,6 @@ class AdminAPI
             $this->sendResponse('error', 'Job ID required');
         }
 
-        // Ideally, check for dependencies (applications) and delete them first or use ON DELETE CASCADE
-        // For now, assuming ON DELETE CASCADE or simply trying delete.
-
         $stmt = $this->db->prepare("DELETE FROM jobs WHERE id = ?");
         $stmt->bind_param("i", $jobId);
 

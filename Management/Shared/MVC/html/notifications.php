@@ -15,14 +15,18 @@
 
     <main class="notification-container">
         <div class="notification-header">
-            <h2>Notifications</h2>
+            <div class="header-left">
+                <h2>Notifications</h2>
+            </div>
             <div class="notification-tabs">
                 <button class="tab-btn active" data-filter="all">All</button>
                 <button class="tab-btn" data-filter="unread">Unread</button>
                 <button class="tab-btn" data-filter="important">Important</button>
             </div>
             <div class="notification-actions">
-                <button class="action-btn" id="markAllRead">Mark all as read</button>
+                <button class="action-btn" id="markAllRead">
+                    <i class="fas fa-check-double"></i> Mark all as read
+                </button>
             </div>
         </div>
 

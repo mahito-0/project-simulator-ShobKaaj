@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const state = {
-        filter: 'all', 
+        filter: 'all',
         notifications: []
     };
 
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             await apiCall('mark_read', { id: 'all' });
             fetchNotifications();
             if (typeof initNotifications === 'function') {
-            
+
             }
         });
     }
@@ -39,10 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: { 'Content-Type': 'application/json' }
         };
 
-        // If it's a GET friendly action and has no complex data, we could use GET, but POST is safer for state changes.
-        // For fetching, let's use GET params if needed, but our API handles POST input consistently.
         if (action.startsWith('get_')) {
-    
+
             const params = new URLSearchParams(data).toString();
             const getUrl = url + '&' + params;
             const res = await fetch(getUrl);
@@ -92,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const div = document.createElement('div');
         div.className = `notification-item ${notif.is_read == 0 ? 'unread' : ''}`;
 
-        
+
         let iconClass = 'fa-bell';
         if (notif.type === 'warning' || notif.type === 'alert') {
             div.classList.add('important');
@@ -108,9 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <i class="fas ${iconClass}"></i>
             </div>
             <div class="notification-content">
-                <span class="notif-title">${escapeHtml(notif.title)}</span>
+                <div class="notif-header-row">
+                    <span class="notif-title">${escapeHtml(notif.title)}</span>
+                    <div class="notif-time">${date}</div>
+                </div>
                 <p class="notif-message">${escapeHtml(notif.message)}</p>
-                <div class="notif-time">${date}</div>
             </div>
             <div class="item-controls">
                 ${notif.is_read == 0 ? `<button class="icon-btn mark-read" title="Mark as Read"><i class="fas fa-check"></i></button>` : ''}
@@ -118,13 +118,13 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-    
+
         const markReadBtn = div.querySelector('.mark-read');
         if (markReadBtn) {
             markReadBtn.addEventListener('click', async (e) => {
                 e.stopPropagation();
                 await apiCall('mark_read', { id: notif.id });
-            
+
                 div.classList.remove('unread');
                 markReadBtn.remove();
             });
@@ -137,11 +137,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!confirm('Delete this notification?')) return;
 
                 await apiCall('delete', { id: notif.id });
-            
+
                 div.style.opacity = '0';
                 setTimeout(() => {
                     div.remove();
-                    if (container.children.length === 0) render(); 
+                    if (container.children.length === 0) render();
                 }, 200);
             });
         }

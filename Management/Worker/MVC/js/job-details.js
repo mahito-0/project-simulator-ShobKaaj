@@ -51,13 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         els.title.textContent = job.title;
         els.category.textContent = job.category;
 
-        let clientHtml = job.clientName || 'Client Name'; // Note: API returns first/last name separately but UI might expect combined? 
-        // Wait, GetJob API returns first_name, last_name separately.
-        // Let's check how it's used. The HTML has id="clientName".
-        // The renderJob function I viewed earlier didn't set clientName textContent explicitly? 
-        // Ah, I missed it in view_file. Let me check the view_file output again.
-        // Step 351: `els.clientName` is defined but NOT updated in renderJob. That's a bug in existing code too!
-        // I will fix both.
+        let clientHtml = job.clientName || 'Client Name';
 
         const fullName = `${job.first_name} ${job.last_name}`;
         els.clientName.innerHTML = fullName + (job.is_verified === 'verified' ? ' <i class="fas fa-check-circle" style="color:#22c55e; margin-left:4px;" title="Verified"></i>' : '');
