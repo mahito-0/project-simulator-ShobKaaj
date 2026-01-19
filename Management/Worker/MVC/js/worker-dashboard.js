@@ -11,9 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // Role Guard: Ensure user is a worker
+    // Ensure user is a worker
     if (user.role !== 'worker') {
-        // Optional: Redirect to client dashboard if a client tries to access this
         // window.location.href = 'client-dashboard.php';
         return;
     }
@@ -89,7 +88,7 @@ async function renderWorkerStats(container) {
 }
 
 async function renderWorkerJobs() {
-    // For workers, this slot displays "Work History" (Completed Jobs)
+
     const list = document.getElementById('postedJobs');
     if (!list) return;
 
