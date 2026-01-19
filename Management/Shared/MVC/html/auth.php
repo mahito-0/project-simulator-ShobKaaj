@@ -83,8 +83,12 @@
                         <span>or use your email password</span>
                     </div>
 
-                    <input type="email" name="email" class="input" placeholder="Email <?php echo (!isset($_POST['first_name']) && $email_err) ? '*' : ''; ?>" value="<?php echo (!isset($_POST['first_name'])) ? $email : ''; ?>">
+                    <input type="email" name="email" id="login-email" class="input" placeholder="Email <?php echo (!isset($_POST['first_name']) && $email_err) ? '*' : ''; ?>" value="<?php echo (!isset($_POST['first_name'])) ? $email : ''; ?>">
                     <input type="password" name="password" class="input" placeholder="Password <?php echo (!isset($_POST['first_name']) && $password_err) ? '*' : ''; ?>">
+                    <div style="display: flex; align-items: center; gap: 8px; margin: 10px 0;">
+                        <input type="checkbox" name="remember_me" id="remember-me" style="width: auto;">
+                        <label for="remember-me" style="margin: 0; font-size: 14px;">Remember Me</label>
+                    </div>
                     <a href="forgotpass.php">Forget Your Password?</a>
                     <button type="submit" class="btn primary-action">Sign In</button>
                 </form>

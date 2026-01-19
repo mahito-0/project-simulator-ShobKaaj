@@ -165,6 +165,7 @@ class AuthAPI
     {
         $email = $this->getInput('email');
         $password = $this->getInput('password');
+        $rememberMe = $this->getInput('remember_me'); // Get "Remember Me" checkbox value
 
         if (!$email || !$password) {
             $this->sendResponse('error', 'Please enter your email and password.');
@@ -194,6 +195,14 @@ class AuthAPI
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['role'] = $user['role'];
                     $_SESSION['email'] = $user['email'];
+
+                    // Cookie
+                    if ($rememberMe === 'true' || $rememberMe === '1' || $rememberMe === true) {
+                        $cookieExpiry = time() + (30 * 24 * 60 * 60); // 30 days from now
+                        setcookie('remembered_email', $email, $cookieExpiry, '/', '', false, true);
+                    } else {
+                        setcookie('remembered_email', '', time() - 3600, '/', '', false, true);
+                    }
 
                     $this->sendResponse('success', 'Welcome back!', ['user' => $user]);
                 } else {
@@ -504,6 +513,12 @@ ORDER BY r.created_at DESC LIMIT 10";
     {
         session_unset();
         session_destroy();
+
+        // Also clear the "Remember Me" cookie on logout
+        if (isset($_COOKIE['remembered_email'])) {
+            setcookie('remembered_email', '', time() - 3600, '/', '', false, true);
+        }
+
         $this->sendResponse('success', 'Logged out successfully');
     }
 }
