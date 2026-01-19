@@ -1,3 +1,9 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$target_user_id = $_GET['id'] ?? null;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +23,7 @@
     <script src="../js/view-profile.js"></script>
 
     <main class="container">
-       
+
         <div id="loading" style="display: <?php echo (!empty($error) || !empty($user)) ? 'none' : 'block'; ?>; text-align: center; padding: 2rem;">
             <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i>
         </div>
@@ -46,8 +52,8 @@
                         <span><i class="fas fa-phone"></i> <span id="userPhone"><?php echo htmlspecialchars($user['phone'] ?? 'N/A'); ?></span></span>
                     </div>
                     <div class="profile-actions" style="margin-top: 1.5rem;">
-                        <?php if (isset($_SESSION['user_id']) && isset($user['id']) && $_SESSION['user_id'] != $user['id']): ?>
-                            <a href="messages.php?user_id=<?php echo $user['id']; ?>" class="btn primary-action">
+                        <?php if (isset($_SESSION['user_id']) && $target_user_id && $_SESSION['user_id'] != $target_user_id): ?>
+                            <a href="messages.php?user_id=<?php echo htmlspecialchars($target_user_id); ?>" class="btn primary-action">
                                 <i class="fas fa-comment-alt"></i> Send Message
                             </a>
                         <?php endif; ?>
@@ -55,7 +61,6 @@
                 </div>
             </div>
 
-            
             <div class="profile-skills" style="margin-top: 1.5rem; text-align: center; display: <?php echo (!empty($user['role']) && $user['role'] === 'worker' && !empty($user['skills'])) ? 'block' : 'none'; ?>;" id="skillsSection">
                 <h3>Skills</h3>
                 <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:0.5rem; justify-content: center;" id="skillsList">
@@ -67,7 +72,7 @@
                 </div>
             </div>
 
-        
+
             <div id="workerStats" class="profile-stats" style="display: <?php echo (!empty($user['role']) && $user['role'] === 'worker') ? 'grid' : 'none'; ?>;">
                 <div class="stat-box">
                     <div id="jobsCompleted" class="stat-value"><?php echo $stats['completed_jobs'] ?? 0; ?></div>
@@ -83,7 +88,7 @@
                 </div>
             </div>
 
-    
+
             <div id="clientStats" class="profile-stats" style="display: <?php echo (!empty($user['role']) && $user['role'] === 'client') ? 'grid' : 'none'; ?>;">
                 <div class="stat-box">
                     <div id="jobsPosted" class="stat-value"><?php echo $stats['jobs_posted'] ?? 0; ?></div>
@@ -95,7 +100,7 @@
                 </div>
             </div>
 
-        
+
             <div id="reviewsSection" class="reviews-section" style="display: <?php echo (!empty($user['role']) && $user['role'] === 'worker') ? 'block' : 'none'; ?>;">
                 <h3>Reviews</h3>
                 <div id="reviewsList" class="reviews-list">
