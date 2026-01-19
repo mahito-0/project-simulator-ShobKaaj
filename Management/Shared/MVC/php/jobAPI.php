@@ -27,6 +27,24 @@ class JobAPI
         exit;
     }
 
+    function createNotification($userId, $type, $title, $message)
+    {
+        try {
+            $stmt = $this->db->prepare("INSERT INTO notifications (user_id, type, title, message, created_at) VALUES (?, ?, ?, ?, NOW())");
+            if ($stmt) {
+                $stmt->bind_param("isss", $userId, $type, $title, $message);
+                if (!$stmt->execute()) {
+                    error_log("Notification insert failed: " . $stmt->error);
+                }
+                $stmt->close();
+            } else {
+                error_log("Notification prepare failed: " . $this->db->error);
+            }
+        } catch (Exception $e) {
+            error_log("Notification exception: " . $e->getMessage());
+        }
+    }
+
     function getInput($key)
     {
         return $_REQUEST[$key] ?? '';
@@ -202,6 +220,7 @@ class JobAPI
             $this->sendResponse('error', 'Please write a cover letter');
         }
 
+        // Check if already applied
         $checkSql = "SELECT id FROM applications WHERE job_id = ? AND worker_id = ?";
         $checkStmt = $this->db->prepare($checkSql);
         $checkStmt->bind_param("ii", $jobId, $workerId);
@@ -209,7 +228,9 @@ class JobAPI
         if ($checkStmt->get_result()->num_rows > 0) {
             $this->sendResponse('error', 'You have already applied for this job');
         }
+        $checkStmt->close();
 
+        // Insert Application
         $sql = "INSERT INTO applications (job_id, worker_id, bid_amount, cover_letter, status, created_at) 
                 VALUES (?, ?, ?, ?, 'pending', NOW())";
 
@@ -217,6 +238,37 @@ class JobAPI
         $stmt->bind_param("iiss", $jobId, $workerId, $bid, $cover);
 
         if ($stmt->execute()) {
+            $stmt->close(); // IMPORTANT: Close insert statement before running new queries
+
+            // --- Notification Logic ---
+
+            // 1. Get Job Info
+            $jobInfoSql = "SELECT title, client_id FROM jobs WHERE id = ?";
+            $jStmt = $this->db->prepare($jobInfoSql);
+            $jStmt->bind_param("i", $jobId);
+            $jStmt->execute();
+            $jobRes = $jStmt->get_result();
+            $jobInfo = $jobRes->fetch_assoc();
+            $jStmt->close();
+
+            // 2. Get Worker Info
+            $workerInfoSql = "SELECT first_name, last_name FROM users WHERE id = ?";
+            $wStmt = $this->db->prepare($workerInfoSql);
+            $wStmt->bind_param("i", $workerId);
+            $wStmt->execute();
+            $workerRes = $wStmt->get_result();
+            $workerInfo = $workerRes->fetch_assoc();
+            $wStmt->close();
+
+            // 3. Create Notification if data exists
+            if ($jobInfo && $workerInfo) {
+                $workerName = $workerInfo['first_name'] . ' ' . $workerInfo['last_name'];
+                $notifTitle = "New Application";
+                $notifMsg = "$workerName applied for your job: " . $jobInfo['title'];
+
+                $this->createNotification($jobInfo['client_id'], 'important', $notifTitle, $notifMsg);
+            }
+
             $this->sendResponse('success', 'Application submitted successfully');
         } else {
             $this->sendResponse('error', 'Failed to apply: ' . $this->db->error);
@@ -277,17 +329,35 @@ class JobAPI
                 throw new Exception("Execute failed for application update: " . $stmt->error);
             }
 
-            $stmt2 = $this->db->prepare("UPDATE jobs SET status = 'in_progress' WHERE id = ?");
+            $stmt2 = $this->db->prepare("UPDATE jobs SET status = 'in_progress', hired_worker_id = (SELECT worker_id FROM applications WHERE id = ?) WHERE id = ?");
             if (!$stmt2) {
                 throw new Exception("Prepare failed for job update: " . $this->db->error);
             }
-            $stmt2->bind_param("i", $jobId);
+            $stmt2->bind_param("ii", $appId, $jobId);
 
             if (!$stmt2->execute()) {
                 throw new Exception("Execute failed for job update: " . $stmt2->error);
             }
 
             $this->db->commit();
+
+            // Notify Worker
+            $workerSql = "SELECT worker_id FROM applications WHERE id = ?";
+            $wStmt = $this->db->prepare($workerSql);
+            $wStmt->bind_param("i", $appId);
+            $wStmt->execute();
+            $workerData = $wStmt->get_result()->fetch_assoc();
+
+            $jobSql = "SELECT title FROM jobs WHERE id = ?";
+            $jStmt = $this->db->prepare($jobSql);
+            $jStmt->bind_param("i", $jobId);
+            $jStmt->execute();
+            $jobInfo = $jStmt->get_result()->fetch_assoc();
+
+            if ($workerData && $jobInfo) {
+                $this->createNotification($workerData['worker_id'], 'success', "You're Hired!", "You have been hired for the job: " . $jobInfo['title']);
+            }
+
             $this->sendResponse('success', 'Worker hired');
         } catch (Exception $e) {
             $this->db->rollback();
@@ -302,6 +372,25 @@ class JobAPI
         $stmt->bind_param("i", $appId);
 
         if ($stmt->execute()) {
+
+            // Notify Worker
+            $appSql = "SELECT worker_id, job_id FROM applications WHERE id = ?";
+            $aStmt = $this->db->prepare($appSql);
+            $aStmt->bind_param("i", $appId);
+            $aStmt->execute();
+            $appData = $aStmt->get_result()->fetch_assoc();
+
+            if ($appData) {
+                $jobSql = "SELECT title FROM jobs WHERE id = ?";
+                $jStmt = $this->db->prepare($jobSql);
+                $jStmt->bind_param("i", $appData['job_id']);
+                $jStmt->execute();
+                $jobInfo = $jStmt->get_result()->fetch_assoc();
+
+                $jobTitle = $jobInfo ? $jobInfo['title'] : 'a job';
+                $this->createNotification($appData['worker_id'], 'important', "Application Rejected", "Your application for '$jobTitle' was not successful.");
+            }
+
             $this->sendResponse('success', 'Application rejected');
         } else {
             $this->sendResponse('error', 'Failed to reject');
@@ -344,6 +433,18 @@ class JobAPI
             }
 
             $this->db->commit();
+
+            // Notify Worker
+            $jobSql = "SELECT title, budget FROM jobs WHERE id = ?";
+            $jStmt = $this->db->prepare($jobSql);
+            $jStmt->bind_param("i", $jobId);
+            $jStmt->execute();
+            $jobInfo = $jStmt->get_result()->fetch_assoc();
+
+            if ($jobInfo) {
+                $this->createNotification($workerId, 'success', "Job Completed & Paid", "The job '" . $jobInfo['title'] . "' is marked complete. Payment of $" . $jobInfo['budget'] . " has been released.");
+            }
+
             $this->sendResponse('success', 'Job completed and review saved');
         } catch (Exception $e) {
             $this->db->rollback();
