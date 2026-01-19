@@ -33,15 +33,15 @@ window.getAvatarPath = function (avatarStr, role = '') {
     const DEFAULT_AVATAR = '/project-simulator-ShobKaaj/Management/Shared/MVC/images/logo.png';
     if (!avatarStr) return DEFAULT_AVATAR;
 
-    // Use default if it's the broken fallback path
+    // Use default 
     if (avatarStr.includes('avater.png')) return DEFAULT_AVATAR;
 
-    // If it's already a full URL or absolute path starting with /project-simulator-ShobKaaj
+
     if (avatarStr.startsWith('http') || avatarStr.startsWith('/project-simulator-ShobKaaj')) {
         return avatarStr;
     }
 
-    // Extract filename from any path structure
+    // Extract filename 
     let filename = avatarStr;
     if (avatarStr.includes('/') || avatarStr.includes('\\')) {
         filename = avatarStr.split(/[/\\]/).pop();
@@ -72,7 +72,7 @@ function updateBell(count) {
 async function initNotifications(user) {
     if (!user) return;
 
-    // Function to fetch and update count
+    // fetch and update count
     const updateCount = async () => {
         try {
             const res = await fetch('/project-simulator-ShobKaaj/Management/Shared/MVC/php/notificationsAPI.php?action=get_unread_count');

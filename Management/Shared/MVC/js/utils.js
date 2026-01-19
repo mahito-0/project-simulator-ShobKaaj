@@ -6,7 +6,7 @@ const API = {
     // Post FormData (for file uploads and forms)
     postForm: async (action, formData, apiName = 'authAPI') => {
         try {
-            // Adjust path based on where we are being called from
+            // Adjust path based on where API is being called from
             // Assuming current page is in /html/ or root
             const response = await fetch(`../php/${apiName}.php?action=${action}`, {
                 method: 'POST',
@@ -59,12 +59,11 @@ function getAvatarPath(avatarStr, role = '') {
     // Use default if it's the broken fallback path
     if (avatarStr.includes('avater.png')) return DEFAULT_AVATAR;
 
-    // If it's already a full URL or absolute path starting with /project-simulator-ShobKaaj
     if (avatarStr.startsWith('http') || avatarStr.startsWith('/project-simulator-ShobKaaj')) {
         return avatarStr;
     }
 
-    // Extract filename from any path structure
+    // Extract filename 
     let filename = avatarStr;
     if (avatarStr.includes('/') || avatarStr.includes('\\')) {
         filename = avatarStr.split(/[/\\]/).pop();
@@ -82,5 +81,5 @@ function getAvatarPath(avatarStr, role = '') {
     return finalPath;
 }
 
-// Expose to window for global access if needed
+// Expose to window for global access 
 window.getAvatarPath = getAvatarPath;
