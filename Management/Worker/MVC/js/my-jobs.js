@@ -34,6 +34,7 @@ async function loadMyJobs(workerId) {
 
     try {
         const apiPath = '/project-simulator-ShobKaaj/Management/Shared/MVC/php/jobAPI.php';
+        // AJAX: Fetch my jobs
         const response = await fetch(`${apiPath}?action=get_categorized_worker_jobs&worker_id=${workerId}`);
         const result = await response.json();
 

@@ -15,6 +15,7 @@ async function fetchUserProfile(id) {
     const errorState = document.getElementById('errorState');
 
     try {
+        // AJAX: Fetch public profile
         const response = await fetch(`../php/authAPI.php?action=get_public_profile&id=${id}`);
         const result = await response.json();
         console.log('Profile API Result:', result); // Debugging
@@ -24,16 +25,13 @@ async function fetchUserProfile(id) {
             const stats = result.stats;
             const reviews = result.reviews;
 
-        
             document.getElementById('profileName').textContent = `${user.first_name} ${user.last_name}`;
             document.getElementById('userRole').textContent = user.role;
             document.getElementById('userEmail').textContent = user.email;
             document.getElementById('userPhone').textContent = user.phone || 'N/A';
 
-            
             document.getElementById('userAvatar').src = window.getAvatarPath(user.avatar, user.role);
 
-            
             if (user.role === 'worker') {
                 document.getElementById('workerStats').style.display = 'grid';
                 document.getElementById('reviewsSection').style.display = 'block';
@@ -44,11 +42,10 @@ async function fetchUserProfile(id) {
                 document.getElementById('clientStats').style.display = 'grid';
                 document.getElementById('jobsPosted').textContent = stats.jobs_posted || 0;
                 document.getElementById('totalSpent').textContent = '৳' + parseFloat(stats.total_spent || 0).toLocaleString();
-                
+
                 document.getElementById('reviewsSection').style.display = 'none';
             }
 
-        
             if (user.role === 'worker' && reviews.length > 0) {
                 const reviewsList = document.getElementById('reviewsList');
                 let html = '';
