@@ -42,6 +42,7 @@
 - **View Profile**: Display user stats, reviews, and skills based on role [Docs](Features/VIEW_PROFILE_FEATURE.md).
 - **Unified Design System**: Consistent "Glassmorphism" UI with neon accents.
 - **In-App Chat**: Real-time messaging system for Clients and Workers to communicate directly [Docs](Features/IN_APP_CHAT_FEATURE.md).
+- **Notifications System**: In-app alerts for job applications, hiring, and payments with unread badges [Docs](Features/NOTIFICATIONS_FEATURE.md).
 - **AI Chatbot Assistant**: Intelligent virtual assistant powered by local AI (Ollama) to help users navigate the platform and answer queries [Docs](Features/AI_CHATBOT_FEATURE.md).
 
 ## Project Structure
@@ -95,5 +96,7 @@ All features are documented in the `Features/` directory. Each `.md` file contai
 | `profile.php` | All | View/edit own profile |
 | `view-profile.php` | All | View other users' profiles |
 | `messages.php` | All | In-app messaging and conversations |
+| `notifications.php` | All | User notification center |
 | `admin.php` | Admin | Admin control panel |
+| `analytics.php` | Admin | View platform analytics |
 
