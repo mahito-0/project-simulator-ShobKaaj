@@ -183,15 +183,15 @@ class AuthAPI
 
                 // Verify the password hash
                 if (password_verify($password, $user['password'])) {
-                    // Check if user is terminated
+                    // Check if terminated
                     if (isset($user['status']) && $user['status'] === 'terminated') {
                         $this->sendResponse('error', 'Your account has been terminated. Please contact support.');
                     }
 
-                    // Remove password from response for security
+                    // Remove password
                     unset($user['password']);
 
-                    // Set Session Variables
+                    // Set Session 
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['role'] = $user['role'];
                     $_SESSION['email'] = $user['email'];
@@ -233,12 +233,12 @@ class AuthAPI
         $stmt = $this->db->prepare($sql);
 
         if ($stmt) {
-            // id is likely integer, but string 's' works safely for all
+
             $stmt->bind_param("ssssi", $fname, $lname, $phone, $skills, $id);
             $stmt->execute();
             $stmt->close();
 
-            // Fetch updated user
+
             $check = $this->db->prepare("SELECT * FROM users WHERE id = ?");
             $check->bind_param("i", $id);
             $check->execute();
@@ -310,7 +310,7 @@ class AuthAPI
             $this->sendResponse('error', 'File too large. Max 5MB.');
         }
 
-        // 1. Fetch User Role to determine storage location
+
         $stmt = $this->db->prepare("SELECT role FROM users WHERE id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -514,7 +514,7 @@ ORDER BY r.created_at DESC LIMIT 10";
         session_unset();
         session_destroy();
 
-        // Also clear the "Remember Me" cookie on logout
+        // clear the "Remember Me" cookie on logout
         if (isset($_COOKIE['remembered_email'])) {
             setcookie('remembered_email', '', time() - 3600, '/', '', false, true);
         }
