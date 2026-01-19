@@ -65,45 +65,28 @@ window.getAvatarPath = function (avatarStr, role = '') {
 function updateBell(count) {
     const el = document.getElementById('notifCount');
     if (!el) return;
-    if (count > 0) { el.style.display = 'inline-block'; el.textContent = count > 99 ? '99+' : String(count); }
+    if (count > 0) { el.style.display = 'inline-flex'; el.textContent = count > 99 ? '99+' : String(count); }
     else { el.style.display = 'none'; el.textContent = '0'; }
 }
 
 async function initNotifications(user) {
     if (!user) return;
-    // Fetch unread count initially
-    try {
-        const { notifications } = await $api('/api/notifications?unread=1');
-        updateBell(notifications.length || 0);
-    } catch { }
 
-    // Load socket.io client dynamically
-    function ensureSocket() {
-        return new Promise((resolve) => {
-            if (window.io) return resolve(window.io);
-            // Check if socket.io script exists, otherwise fail gracefully
-            if (!document.querySelector('script[src*="socket.io"]')) {
-                // console.debug("Socket.io script not found, skipping real-time notifications");
-                return resolve(null);
+    // Function to fetch and update count
+    const updateCount = async () => {
+        try {
+            const res = await fetch('/project-simulator-ShobKaaj/Management/Shared/MVC/php/notificationsAPI.php?action=get_unread_count');
+            const data = await res.json();
+            if (data.status === 'success') {
+                updateBell(data.count);
             }
-            const s = document.createElement('script');
-            s.src = '/socket.io/socket.io.js';
-            s.onload = () => resolve(window.io);
-            s.onerror = () => resolve(null); // Resolve null on error
-            document.head.appendChild(s);
-        });
-    }
+        } catch (e) { console.error('Failed to fetch notification count', e); }
+    };
 
-    const ioFactory = await ensureSocket();
-    if (ioFactory) {
-        const socket = ioFactory({ withCredentials: true });
-        socket.on('notify', (n) => {
-            // increase bell count
-            const el = document.getElementById('notifCount');
-            const curr = Number(el?.textContent || 0) || 0;
-            updateBell(curr + 1);
-        });
-    }
+    // Initial fetch
+    updateCount();
+
+    setInterval(updateCount, 60000);
 }
 
 function renderNavbar(user) {
@@ -211,7 +194,13 @@ function renderNavbar(user) {
         if (item.auth && !user) return '';
         if (item.role && item.role !== user?.role) return '';
         const isActive = currentPath.includes(item.href.toLowerCase().split('#')[0]) ? 'active' : '';
-        return `<a href="${item.href}" class="nav-item ${isActive}">${item.text}</a>`;
+
+        let content = item.text;
+        if (item.text === 'Notifications') {
+            content += ' <span id="notifCount" class="nav-badge-inline" style="display:none">0</span>';
+        }
+
+        return `<a href="${item.href}" class="nav-item ${isActive}">${content}</a>`;
     }).join('')}
         </div>
 
