@@ -36,7 +36,7 @@
 
     <main class="auth-wrapper">
         <div class="auth-container" id="container">
-            // Sign Up Form
+            <!-- Sign Up Form -->
             <div class="form-container sign-up">
                 <form action="auth.php" method="POST">
                     <h1>Create Account</h1>
@@ -71,7 +71,7 @@
                 </form>
             </div>
 
-            //Sign In Form
+            <!--Sign In Form-->
             <div class="form-container sign-in">
                 <form action="auth.php" method="POST">
                     <h1>Sign In</h1>
@@ -94,7 +94,7 @@
                 </form>
             </div>
 
-            // Toggle Overlay
+            <!-- Toggle Overlay -->
             <div class="toggle-container">
                 <div class="toggle">
                     <div class="toggle-panel toggle-left">
@@ -112,7 +112,6 @@
         </div>
     </main>
 
-    // Script
     <script src="../js/auth.js"></script>
 </body>
 

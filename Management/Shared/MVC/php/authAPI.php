@@ -405,12 +405,12 @@ class AuthAPI
 
         // Base Query: Get only workers
         $sql = "SELECT users.id, users.first_name, users.last_name, users.avatar, users.email, users.skills,
-(SELECT COUNT(*) FROM applications JOIN jobs ON applications.job_id = jobs.id WHERE applications.worker_id = users.id AND jobs.status = 'completed') as completed_jobs,
-(SELECT SUM(bid_amount) FROM applications JOIN jobs ON applications.job_id = jobs.id WHERE applications.worker_id = users.id AND jobs.status = 'completed') as total_earnings,
-(SELECT AVG(rating) FROM reviews WHERE reviewee_id = users.id) as rating,
-(SELECT COUNT(*) FROM reviews WHERE reviewee_id = users.id) as reviews_count
-FROM users
-WHERE role = 'worker'";
+                        (SELECT COUNT(*) FROM applications JOIN jobs ON applications.job_id = jobs.id WHERE applications.worker_id = users.id AND jobs.status = 'completed') as completed_jobs,
+                        (SELECT SUM(bid_amount) FROM applications JOIN jobs ON applications.job_id = jobs.id WHERE applications.worker_id = users.id AND jobs.status = 'completed') as total_earnings,
+                        (SELECT AVG(rating) FROM reviews WHERE reviewee_id = users.id) as rating,
+                        (SELECT COUNT(*) FROM reviews WHERE reviewee_id = users.id) as reviews_count
+                        FROM users
+                        WHERE role = 'worker'";
 
         $params = [];
         $types = "";
@@ -465,9 +465,9 @@ WHERE role = 'worker'";
         if ($user['role'] === 'worker') {
             // Worker Stats
             $sqlStats = "SELECT
-(SELECT COUNT(*) FROM applications JOIN jobs ON applications.job_id = jobs.id WHERE applications.worker_id = ? AND jobs.status = 'completed') as completed_jobs,
-(SELECT COALESCE(SUM(bid_amount), 0) FROM applications JOIN jobs ON applications.job_id = jobs.id WHERE applications.worker_id = ? AND jobs.status = 'completed') as total_earnings,
-(SELECT COALESCE(AVG(rating), 0) FROM reviews WHERE reviewee_id = ?) as rating";
+                            (SELECT COUNT(*) FROM applications JOIN jobs ON applications.job_id = jobs.id WHERE applications.worker_id = ? AND jobs.status = 'completed') as completed_jobs,
+                            (SELECT COALESCE(SUM(bid_amount), 0) FROM applications JOIN jobs ON applications.job_id = jobs.id WHERE applications.worker_id = ? AND jobs.status = 'completed') as total_earnings,
+                            (SELECT COALESCE(AVG(rating), 0) FROM reviews WHERE reviewee_id = ?) as rating";
             $stmtStats = $this->db->prepare($sqlStats);
             $stmtStats->bind_param("iii", $id, $id, $id);
             $stmtStats->execute();
@@ -477,11 +477,11 @@ WHERE role = 'worker'";
 
             // Fetch Reviews
             $sqlReviews = "SELECT r.rating, r.comment, r.created_at, j.title as job_title, u.first_name as reviewer_name
-FROM reviews r
-JOIN jobs j ON r.job_id = j.id
-JOIN users u ON r.reviewer_id = u.id
-WHERE r.reviewee_id = ?
-ORDER BY r.created_at DESC LIMIT 10";
+                              FROM reviews r
+                              JOIN jobs j ON r.job_id = j.id
+                              JOIN users u ON r.reviewer_id = u.id
+                              WHERE r.reviewee_id = ?
+                              ORDER BY r.created_at DESC LIMIT 10";
             $stmtReviews = $this->db->prepare($sqlReviews);
             $stmtReviews->bind_param("i", $id);
             $stmtReviews->execute();
@@ -491,8 +491,8 @@ ORDER BY r.created_at DESC LIMIT 10";
         } else {
             // Client Stats
             $sqlStats = "SELECT
-(SELECT COUNT(*) FROM jobs WHERE client_id = ?) as jobs_posted,
-(SELECT COALESCE(SUM(budget), 0) FROM jobs WHERE client_id = ? AND status = 'completed') as total_spent";
+                            (SELECT COUNT(*) FROM jobs WHERE client_id = ?) as jobs_posted,
+                            (SELECT COALESCE(SUM(budget), 0) FROM jobs WHERE client_id = ? AND status = 'completed') as total_spent";
             $stmtStats = $this->db->prepare($sqlStats);
             $stmtStats->bind_param("ii", $id, $id);
             $stmtStats->execute();
